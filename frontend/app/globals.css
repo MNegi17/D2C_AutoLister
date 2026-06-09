@@ -2,41 +2,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f3f7f5; /* Fresh, modern light mint-tinted background */
+  --background: #f4f8f6; /* Modern light mint background */
   --foreground: #091a12; /* Deep forest-black for rich text contrast */
-  --card-bg: rgba(255, 255, 255, 0.85); /* Clean white glass card background */
-  --card-border: rgba(5, 150, 105, 0.08); /* Delicate emerald/green borders */
-  --accent-primary: #059669; /* Deep emerald green for perfect legibility */
-  --accent-secondary: #10b981; /* Bright emerald */
-  --accent-glow: rgba(5, 150, 105, 0.06);
+  --card-bg: rgba(255, 255, 255, 0.85); /* Clean white card background */
+  --card-border: rgba(16, 185, 129, 0.12); /* Muted emerald/green borders */
+  --accent-primary: #10b981; /* Leaf emerald */
+  --accent-secondary: #059669; /* Rich emerald dark accent */
+  --accent-glow: rgba(16, 185, 129, 0.05);
 }
 
 @theme inline {
-  --color-slate-50: #ffffff;
-  --color-slate-100: #f8fafc;
-  --color-slate-200: #e2e8f0;
-  --color-slate-300: #cbd5e1;
-  --color-slate-400: #64748b;
-  --color-slate-500: #475569;
-  --color-slate-600: #334155;
-  --color-slate-700: #1e293b;
-  --color-slate-800: #cbd5e1; /* Maps borders/dividers to clean light gray */
-  --color-slate-900: #f1f5f9; /* Maps dark-slate panel/table bg to light slate-100 */
-  --color-slate-950: #ffffff; /* Maps page-bg / sidebar bg to pure white */
-
-  /* Re-routing default indigo/blue to matching green theme */
-  --color-indigo-50: #e6f4ea;
-  --color-indigo-100: #d1ebd6;
-  --color-indigo-200: #a3d7b0;
-  --color-indigo-300: #047857; /* Rich emerald-700 for text readability */
-  --color-indigo-400: #059669; /* Emerald-600 */
-  --color-indigo-500: #10b981; /* Emerald-500 */
-  --color-indigo-600: #059669;
-  --color-indigo-700: #047857;
-  --color-indigo-800: #065f46;
-  --color-indigo-900: #064e3b;
-  --color-indigo-950: #e6f4ea; /* Active menu highlight background */
-
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent-primary: var(--accent-primary);
@@ -51,8 +26,8 @@ body {
   font-family: 'Outfit', sans-serif;
   min-height: 100vh;
   background-image: 
-    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(34, 197, 94, 0.05) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(34, 197, 94, 0.03) 0px, transparent 50%);
   background-attachment: fixed;
   overflow-x: hidden;
 }

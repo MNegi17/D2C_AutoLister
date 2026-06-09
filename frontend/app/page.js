@@ -464,7 +464,7 @@ export default function AutoListerDashboard() {
       c.original === header && c.target === shopifyCol
     );
     if (hasCorrection) {
-      return "border-indigo-500/30 text-indigo-400 bg-indigo-500/5";
+      return "border-indigo-500/30 text-emerald-600 bg-indigo-500/5";
     }
 
     const synonyms = SEMANTIC_THESAURUS[shopifyCol];
@@ -475,7 +475,7 @@ export default function AutoListerDashboard() {
       }
       return "border-amber-500/30 text-amber-400 bg-amber-500/5";
     }
-    return "border-slate-800 text-slate-400 bg-slate-900";
+    return "border-slate-200 text-slate-400 bg-slate-50";
   };
 
   // Helper score label
@@ -525,16 +525,16 @@ export default function AutoListerDashboard() {
       )}
 
       {/* FIXED LEFT SIDEBAR */}
-      <aside className="w-80 bg-slate-950/80 border-r border-emerald-500/10 flex flex-col p-6 sticky top-0 h-screen overflow-y-auto">
+      <aside className="w-80 bg-white/80 border-r border-emerald-500/20 flex flex-col p-6 sticky top-0 h-screen overflow-y-auto">
         <div className="flex items-center gap-3 mb-8">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center font-bold text-base text-white shadow-lg shadow-emerald-500/20 pulse-glow">
             D2C
           </div>
           <div>
-            <h1 className="font-bold text-sm tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-slate-100 to-slate-300">
+            <h1 className="font-bold text-sm tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">
               D2C Shopify AutoLister
             </h1>
-            <p className="text-[10px] text-teal-400 font-medium flex items-center gap-1">
+            <p className="text-[10px] text-emerald-600 font-medium flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-ping"></span>
               Intelligent Self-Learning Engine
             </p>
@@ -542,22 +542,22 @@ export default function AutoListerDashboard() {
         </div>
 
         {/* PERSISTENT SQL STATS MINI BOARD */}
-        <div className="bg-slate-900/50 rounded-2xl p-4 border border-indigo-500/5 mb-8">
+        <div className="bg-slate-50 rounded-2xl p-4 border border-indigo-500/5 mb-8">
           <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500">Database Memory Metrics</span>
           <div className="mt-3 flex flex-col gap-2.5">
             <div className="flex items-center justify-between text-xs">
               <span className="text-slate-400">Database Overrides</span>
-              <strong className="text-indigo-400 font-bold font-mono">{learningStats.userCorrectionsSaved}</strong>
+              <strong className="text-emerald-600 font-bold font-mono">{learningStats.userCorrectionsSaved}</strong>
             </div>
-            <div className="h-[1px] bg-slate-800"></div>
+            <div className="h-[1px] bg-slate-100"></div>
             <div className="flex items-center justify-between text-xs">
               <span className="text-slate-400">Learned Columns</span>
-              <strong className="text-teal-400 font-bold font-mono">{learningStats.columnMappingsLearned}</strong>
+              <strong className="text-emerald-600 font-bold font-mono">{learningStats.columnMappingsLearned}</strong>
             </div>
-            <div className="h-[1px] bg-slate-800"></div>
+            <div className="h-[1px] bg-slate-100"></div>
             <div className="flex items-center justify-between text-xs">
               <span className="text-slate-400">SQLite Brand Rules</span>
-              <strong className="text-slate-200 font-bold font-mono">{learningStats.brandRulesConfigured}</strong>
+              <strong className="text-slate-800 font-bold font-mono">{learningStats.brandRulesConfigured}</strong>
             </div>
           </div>
         </div>
@@ -578,10 +578,10 @@ export default function AutoListerDashboard() {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-3.5 px-4 py-3 rounded-xl text-xs font-semibold tracking-wide border transition-all text-left ${
                 activeTab === tab.id
-                  ? "bg-indigo-600/10 border-indigo-500/25 text-indigo-300 shadow-md shadow-indigo-500/5 font-bold"
+                  ? "bg-emerald-50 border-emerald-500/25 text-emerald-700 shadow-md shadow-indigo-500/5 font-bold"
                   : tab.disabled
-                    ? "opacity-35 cursor-not-allowed border-transparent text-slate-600"
-                    : "border-transparent text-slate-400 hover:bg-slate-900 hover:text-slate-200"
+                    ? "opacity-35 cursor-not-allowed border-transparent text-slate-400"
+                    : "border-transparent text-slate-400 hover:bg-slate-50 hover:text-slate-800"
               }`}
             >
               <span className="text-sm leading-none">{tab.icon}</span>
@@ -591,7 +591,7 @@ export default function AutoListerDashboard() {
         </nav>
 
         {/* SYSTEM AUDIT INDICATOR FOOTER */}
-        <div className="pt-6 border-t border-slate-900 flex flex-col gap-1 text-[10px] text-slate-500 font-mono">
+        <div className="pt-6 border-t border-slate-200 flex flex-col gap-1 text-[10px] text-slate-500 font-mono">
           <div>SQLITE DB: autolister.db</div>
           <div>SESSION: {sessionId ? sessionId.slice(0, 8) + "..." : "Inactive"}</div>
         </div>
@@ -602,9 +602,9 @@ export default function AutoListerDashboard() {
         
         {/* LOADING OVERLAY SCENE */}
         {loading && (
-          <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex flex-col items-center justify-center gap-5">
+          <div className="absolute inset-0 bg-white/95 backdrop-blur-md z-50 flex flex-col items-center justify-center gap-5">
             <div className="w-12 h-12 rounded-full border-4 border-indigo-500/15 border-t-indigo-500 animate-spin"></div>
-            <p className="text-indigo-200 font-bold font-mono tracking-wide text-xs uppercase">{loadingMsg}</p>
+            <p className="text-emerald-800 font-bold font-mono tracking-wide text-xs uppercase">{loadingMsg}</p>
           </div>
         )}
 
@@ -614,7 +614,7 @@ export default function AutoListerDashboard() {
             
             {/* Page Header */}
             <div>
-              <h2 className="text-xl font-bold tracking-tight text-slate-100">Upload & SQLite Configuration Hub</h2>
+              <h2 className="text-xl font-bold tracking-tight text-slate-900">Upload & SQLite Configuration Hub</h2>
               <p className="text-xs text-slate-400 mt-1">
                 Upload your listing sheets to run fuzzy column matchers and configure SQLite brand assignment rules or spec templates inline.
               </p>
@@ -625,12 +625,12 @@ export default function AutoListerDashboard() {
               
               {/* FILE UPLOAD PANEL */}
               <div className="glass-panel rounded-2xl p-6 flex flex-col gap-6">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 border-b border-slate-800 pb-3">Source Listing Files</h3>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-600 border-b border-slate-200 pb-3">Source Listing Files</h3>
                 
                 <form onSubmit={handleUploadSubmit} className="flex flex-col gap-5">
                   
                   {/* Mastersheet Upload */}
-                  <div className="border border-dashed border-slate-800 hover:border-indigo-500/40 bg-slate-950/20 rounded-xl p-5 flex items-center justify-between relative transition group">
+                  <div className="border border-dashed border-slate-200 hover:border-indigo-500/40 bg-slate-50 rounded-xl p-5 flex items-center justify-between relative transition group">
                     <input 
                       type="file" 
                       accept=".xlsx"
@@ -638,9 +638,9 @@ export default function AutoListerDashboard() {
                       className="absolute inset-0 opacity-0 cursor-pointer"
                     />
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-indigo-500/5 flex items-center justify-center text-indigo-400 font-bold text-sm">📂</div>
+                      <div className="w-10 h-10 rounded-lg bg-indigo-500/5 flex items-center justify-center text-emerald-600 font-bold text-sm">📂</div>
                       <div className="flex flex-col">
-                        <span className="text-xs font-semibold text-slate-200 leading-snug">
+                        <span className="text-xs font-semibold text-slate-800 leading-snug">
                           {mastersheet ? mastersheet.name : "Mastersheet (Item Directory)"}
                         </span>
                         <span className="text-[10px] text-slate-500 mt-0.5">Accepts Excel (.xlsx) formats containing sizes and MRPs</span>
@@ -650,7 +650,7 @@ export default function AutoListerDashboard() {
                   </div>
 
                   {/* Content Copy Upload */}
-                  <div className="border border-dashed border-slate-800 hover:border-indigo-500/40 bg-slate-950/20 rounded-xl p-5 flex items-center justify-between relative transition group">
+                  <div className="border border-dashed border-slate-200 hover:border-indigo-500/40 bg-slate-50 rounded-xl p-5 flex items-center justify-between relative transition group">
                     <input 
                       type="file" 
                       accept=".xlsx"
@@ -658,9 +658,9 @@ export default function AutoListerDashboard() {
                       className="absolute inset-0 opacity-0 cursor-pointer"
                     />
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-indigo-500/5 flex items-center justify-center text-indigo-400 font-bold text-sm">📝</div>
+                      <div className="w-10 h-10 rounded-lg bg-indigo-500/5 flex items-center justify-center text-emerald-600 font-bold text-sm">📝</div>
                       <div className="flex flex-col">
-                        <span className="text-xs font-semibold text-slate-200 leading-snug">
+                        <span className="text-xs font-semibold text-slate-800 leading-snug">
                           {contentsheet ? contentsheet.name : "Content Copy Sheet"}
                         </span>
                         <span className="text-[10px] text-slate-500 mt-0.5">Accepts Excel (.xlsx) MarketplaceD2C style descriptions</span>
@@ -670,7 +670,7 @@ export default function AutoListerDashboard() {
                   </div>
 
                   {/* Shopify Blank Template Upload */}
-                  <div className="border border-dashed border-slate-800 hover:border-indigo-500/40 bg-slate-950/20 rounded-xl p-5 flex items-center justify-between relative transition group">
+                  <div className="border border-dashed border-slate-200 hover:border-indigo-500/40 bg-slate-50 rounded-xl p-5 flex items-center justify-between relative transition group">
                     <input 
                       type="file" 
                       accept=".csv"
@@ -678,9 +678,9 @@ export default function AutoListerDashboard() {
                       className="absolute inset-0 opacity-0 cursor-pointer"
                     />
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-indigo-500/5 flex items-center justify-center text-indigo-400 font-bold text-sm">📋</div>
+                      <div className="w-10 h-10 rounded-lg bg-indigo-500/5 flex items-center justify-center text-emerald-600 font-bold text-sm">📋</div>
                       <div className="flex flex-col">
-                        <span className="text-xs font-semibold text-slate-200 leading-snug">
+                        <span className="text-xs font-semibold text-slate-800 leading-snug">
                           {template ? template.name : "Blank Shopify Template"}
                         </span>
                         <span className="text-[10px] text-slate-500 mt-0.5">Accepts default template CSV containing matching column structures</span>
@@ -690,7 +690,7 @@ export default function AutoListerDashboard() {
                   </div>
 
                   {/* Optional Learning CSV Upload */}
-                  <div className="border border-dashed border-slate-800 hover:border-teal-500/40 bg-slate-950/10 rounded-xl p-5 flex items-center justify-between relative transition group">
+                  <div className="border border-dashed border-slate-200 hover:border-teal-500/40 bg-slate-50/50 rounded-xl p-5 flex items-center justify-between relative transition group">
                     <input 
                       type="file" 
                       accept=".csv"
@@ -698,20 +698,20 @@ export default function AutoListerDashboard() {
                       className="absolute inset-0 opacity-0 cursor-pointer"
                     />
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-teal-500/5 flex items-center justify-center text-teal-400 font-bold text-sm">✨</div>
+                      <div className="w-10 h-10 rounded-lg bg-teal-500/5 flex items-center justify-center text-emerald-600 font-bold text-sm">✨</div>
                       <div className="flex flex-col">
-                        <span className="text-xs font-semibold text-teal-400 leading-snug">
+                        <span className="text-xs font-semibold text-emerald-600 leading-snug">
                           {historical ? historical.name : "Optional: Historical Listing CSV"}
                         </span>
                         <span className="text-[10px] text-slate-500 mt-0.5">Learn mapping relationships automatically from your past listings</span>
                       </div>
                     </div>
-                    {historical && <span className="text-xs text-teal-400 font-bold font-mono">✓</span>}
+                    {historical && <span className="text-xs text-emerald-600 font-bold font-mono">✓</span>}
                   </div>
                   
                   {/* Lookup Style Keys to List */}
-                  <div className="flex flex-col gap-2 bg-slate-950/20 rounded-xl p-5 border border-slate-800">
-                    <label className="text-xs font-bold text-indigo-400 font-mono uppercase tracking-wide">
+                  <div className="flex flex-col gap-2 bg-slate-50 rounded-xl p-5 border border-slate-200">
+                    <label className="text-xs font-bold text-emerald-600 font-mono uppercase tracking-wide">
                       Lookup Style Keys to List (Optional)
                     </label>
                     <span className="text-[10px] text-slate-500">
@@ -722,7 +722,7 @@ export default function AutoListerDashboard() {
                       value={allowedItemColors}
                       onChange={(e) => setAllowedItemColors(e.target.value)}
                       placeholder="Paste keys here...&#10;e.g.&#10;PGTOPW001955-BROWN&#10;PBTSFW002142-ORANGE"
-                      className="w-full bg-slate-900 border border-slate-700 text-slate-200 font-mono rounded-lg p-2.5 text-xs mt-1 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"
+                      className="w-full bg-slate-50 border border-slate-300 text-slate-800 font-mono rounded-lg p-2.5 text-xs mt-1 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"
                     />
                   </div>
 
@@ -740,15 +740,15 @@ export default function AutoListerDashboard() {
                 
                 {/* Brand rules editor */}
                 <div className="glass-panel rounded-2xl p-6 flex flex-col gap-4">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 border-b border-slate-800 pb-3 flex justify-between items-center">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-600 border-b border-slate-200 pb-3 flex justify-between items-center">
                     <span>SQLite Brand Rules Configurator</span>
                     <span className="text-[10px] font-mono text-slate-500">Table: brand_rules</span>
                   </h3>
 
-                  <div className="overflow-x-auto custom-scroll border border-slate-800 bg-slate-950/20 rounded-xl">
+                  <div className="overflow-x-auto custom-scroll border border-slate-200 bg-slate-50 rounded-xl">
                     <table className="w-full text-left text-xs border-collapse">
                       <thead>
-                        <tr className="border-b border-slate-800 bg-slate-900/60 text-slate-400 font-semibold">
+                        <tr className="border-b border-slate-200 bg-slate-100/90 text-slate-700 font-semibold">
                           <th className="p-3">Division</th>
                           <th className="p-3">Assigned Brand Name</th>
                           <th className="p-3 text-right">Actions</th>
@@ -756,7 +756,7 @@ export default function AutoListerDashboard() {
                       </thead>
                       <tbody>
                         {brandRules.map(rule => (
-                          <tr key={rule.id} className="border-b border-slate-900 hover:bg-slate-900/20 text-slate-300">
+                          <tr key={rule.id} className="border-b border-slate-900 hover:bg-emerald-50/50 text-slate-700">
                             <td className="p-3 font-bold text-slate-400 font-mono text-[10px] uppercase">{rule.division}</td>
                             <td className="p-3">
                               {editingBrandId === rule.id ? (
@@ -764,10 +764,10 @@ export default function AutoListerDashboard() {
                                   type="text" 
                                   value={editingBrandVal}
                                   onChange={(e) => setEditingBrandVal(e.target.value)}
-                                  className="bg-slate-900 border border-slate-700 text-slate-200 font-medium rounded p-1 text-xs w-48"
+                                  className="bg-slate-50 border border-slate-300 text-slate-800 font-medium rounded p-1 text-xs w-48"
                                 />
                               ) : (
-                                <span className="font-semibold text-slate-200">{rule.brand_name}</span>
+                                <span className="font-semibold text-slate-800">{rule.brand_name}</span>
                               )}
                             </td>
                             <td className="p-3 text-right">
@@ -775,13 +775,13 @@ export default function AutoListerDashboard() {
                                 <div className="flex gap-2 justify-end">
                                   <button 
                                     onClick={() => handleUpdateBrandRule(rule.division, editingBrandVal)}
-                                    className="px-2 py-1 rounded bg-teal-500/20 border border-teal-500/30 text-teal-300 font-bold hover:bg-teal-500/30 text-[10px]"
+                                    className="px-2 py-1 rounded bg-teal-500/20 border border-teal-500/30 text-emerald-700 font-bold hover:bg-teal-500/30 text-[10px]"
                                   >
                                     Save
                                   </button>
                                   <button 
                                     onClick={() => setEditingBrandId(null)}
-                                    className="px-2 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:bg-slate-700 text-[10px]"
+                                    className="px-2 py-1 rounded bg-slate-100 border border-slate-300 text-slate-400 hover:bg-slate-200 text-[10px]"
                                   >
                                     Cancel
                                   </button>
@@ -792,7 +792,7 @@ export default function AutoListerDashboard() {
                                     setEditingBrandId(rule.id);
                                     setEditingBrandVal(rule.brand_name);
                                   }}
-                                  className="text-indigo-400 hover:text-indigo-300 font-bold text-[10px]"
+                                  className="text-emerald-600 hover:text-emerald-700 font-bold text-[10px]"
                                 >
                                   Edit Rule
                                 </button>
@@ -807,14 +807,14 @@ export default function AutoListerDashboard() {
 
                 {/* Myntra Spec template configuration */}
                 <div className="glass-panel rounded-2xl p-6 flex flex-col gap-4">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 border-b border-slate-800 pb-3 flex justify-between items-center">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-600 border-b border-slate-200 pb-3 flex justify-between items-center">
                     <span>Category Specification Formats</span>
                     <span className="text-[10px] font-mono text-slate-500">Table: spec_templates</span>
                   </h3>
 
                   <div className="flex flex-col gap-4">
                     {specTemplates.map(tmpl => (
-                      <div key={tmpl.id} className="bg-slate-950/40 p-4 rounded-xl border border-slate-800 flex flex-col gap-3">
+                      <div key={tmpl.id} className="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col gap-3">
                         <div className="flex items-center justify-between">
                           <span className="text-xs font-bold text-slate-400 uppercase tracking-wide font-mono text-[10px]">{tmpl.division} layout format</span>
                           {editingSpecId !== tmpl.id && (
@@ -823,7 +823,7 @@ export default function AutoListerDashboard() {
                                 setEditingSpecId(tmpl.id);
                                 setEditingSpecVal(tmpl.template_format);
                               }}
-                              className="text-indigo-400 hover:text-indigo-300 font-bold text-[10px]"
+                              className="text-emerald-600 hover:text-emerald-700 font-bold text-[10px]"
                             >
                               Edit Template
                             </button>
@@ -836,25 +836,25 @@ export default function AutoListerDashboard() {
                               rows={5}
                               value={editingSpecVal}
                               onChange={(e) => setEditingSpecVal(e.target.value)}
-                              className="bg-slate-900 border border-slate-700 text-slate-200 font-mono rounded p-2 text-xs w-full"
+                              className="bg-slate-50 border border-slate-300 text-slate-800 font-mono rounded p-2 text-xs w-full"
                             />
                             <div className="flex gap-2 justify-end">
                               <button 
                                 onClick={() => handleUpdateSpecTemplate(tmpl.division, editingSpecVal)}
-                                className="px-3 py-1 rounded bg-teal-500/20 border border-teal-500/30 text-teal-300 font-bold hover:bg-teal-500/30 text-[10px]"
+                                className="px-3 py-1 rounded bg-teal-500/20 border border-teal-500/30 text-emerald-700 font-bold hover:bg-teal-500/30 text-[10px]"
                               >
                                 Save JSON
                               </button>
                               <button 
                                 onClick={() => setEditingSpecId(null)}
-                                className="px-3 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:bg-slate-700 text-[10px]"
+                                className="px-3 py-1 rounded bg-slate-100 border border-slate-300 text-slate-400 hover:bg-slate-200 text-[10px]"
                               >
                                 Cancel
                               </button>
                             </div>
                           </div>
                         ) : (
-                          <pre className="font-mono text-[10px] bg-slate-950 p-3 rounded-lg border border-slate-900 text-teal-400 overflow-x-auto custom-scroll max-h-32">
+                          <pre className="font-mono text-[10px] bg-white p-3 rounded-lg border border-slate-900 text-emerald-600 overflow-x-auto custom-scroll max-h-32">
                             {tmpl.template_format}
                           </pre>
                         )}
@@ -877,7 +877,7 @@ export default function AutoListerDashboard() {
             {/* Header */}
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold tracking-tight text-slate-100">Intelligent Synonym Column Mapper</h2>
+                <h2 className="text-xl font-bold tracking-tight text-slate-900">Intelligent Synonym Column Mapper</h2>
                 <p className="text-xs text-slate-400 mt-1">
                   Adjust identified column synonyms. The system learns corrections and overrides future matching rules permanently inside SQLite.
                 </p>
@@ -886,7 +886,7 @@ export default function AutoListerDashboard() {
               <div className="flex gap-3">
                 <button 
                   onClick={() => setActiveTab("upload")}
-                  className="px-4 py-2 text-xs rounded-lg border border-slate-700 text-slate-400 hover:text-slate-200 transition"
+                  className="px-4 py-2 text-xs rounded-lg border border-slate-300 text-slate-400 hover:text-slate-800 transition"
                 >
                   ← Upload Hub
                 </button>
@@ -904,7 +904,7 @@ export default function AutoListerDashboard() {
               
               {/* Mastersheet Columns Panel */}
               <div className="glass-panel rounded-2xl p-6 flex flex-col gap-5">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 border-b border-slate-800 pb-3 flex justify-between items-center">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-600 border-b border-slate-200 pb-3 flex justify-between items-center">
                   <span>Mastersheet (Item Directory) column mapping</span>
                   <span className="text-[10px] font-mono text-slate-500">Source: mastersheet</span>
                 </h3>
@@ -918,11 +918,11 @@ export default function AutoListerDashboard() {
                     { key: "Upper Material", label: "Upper Material (Footwear Specs)" },
                     { key: "Sole Material", label: "Sole Material (Footwear Specs)" }
                   ].map(item => (
-                    <div key={item.key} className="bg-slate-950/40 p-4 rounded-xl border border-slate-800 flex flex-col gap-3">
+                    <div key={item.key} className="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col gap-3">
                       <div className="flex items-center justify-between">
                         <div className="flex flex-col">
                           <span className="text-[10px] text-slate-500 uppercase font-mono">Shopify Target Column</span>
-                          <strong className="text-xs font-bold text-slate-200 mt-0.5">{item.key}</strong>
+                          <strong className="text-xs font-bold text-slate-800 mt-0.5">{item.key}</strong>
                         </div>
                         <span className={`text-[9px] px-2 py-0.5 rounded border font-mono font-semibold uppercase ${getScoreColor(item.key, masterMappings[item.key])}`}>
                           {getScoreLabel(item.key, masterMappings[item.key])}
@@ -938,7 +938,7 @@ export default function AutoListerDashboard() {
                             setMasterMappings(prev => ({ ...prev, [item.key]: val }));
                             saveMappingCorrection("mastersheet", item.key, val);
                           }}
-                          className="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg p-2.5 text-xs font-medium cursor-pointer"
+                          className="w-full bg-slate-50 border border-slate-300 text-slate-800 rounded-lg p-2.5 text-xs font-medium cursor-pointer"
                         >
                           <option value="">-- Unmapped (Skip or defaults) --</option>
                           {masterHeaders.map(h => (
@@ -953,7 +953,7 @@ export default function AutoListerDashboard() {
 
               {/* Content Copy Columns Panel */}
               <div className="glass-panel rounded-2xl p-6 flex flex-col gap-5">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-teal-400 border-b border-slate-800 pb-3 flex justify-between items-center">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-600 border-b border-slate-200 pb-3 flex justify-between items-center">
                   <span>Content Copy Sheet column mapping</span>
                   <span className="text-[10px] font-mono text-slate-500">Source: contentsheet</span>
                 </h3>
@@ -963,11 +963,11 @@ export default function AutoListerDashboard() {
                     { key: "Title", label: "D2C Product Title" },
                     { key: "Body (HTML)", label: "PDP Product Description (Body)" }
                   ].map(item => (
-                    <div key={item.key} className="bg-slate-950/40 p-4 rounded-xl border border-slate-800 flex flex-col gap-3">
+                    <div key={item.key} className="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col gap-3">
                       <div className="flex items-center justify-between">
                         <div className="flex flex-col">
                           <span className="text-[10px] text-slate-500 uppercase font-mono">Shopify Target Column</span>
-                          <strong className="text-xs font-bold text-slate-200 mt-0.5">{item.key}</strong>
+                          <strong className="text-xs font-bold text-slate-800 mt-0.5">{item.key}</strong>
                         </div>
                         <span className={`text-[9px] px-2 py-0.5 rounded border font-mono font-semibold uppercase ${getScoreColor(item.key, contentMappings[item.key])}`}>
                           {getScoreLabel(item.key, contentMappings[item.key])}
@@ -983,7 +983,7 @@ export default function AutoListerDashboard() {
                             setContentMappings(prev => ({ ...prev, [item.key]: val }));
                             saveMappingCorrection("contentsheet", item.key, val);
                           }}
-                          className="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg p-2.5 text-xs font-medium cursor-pointer"
+                          className="w-full bg-slate-50 border border-slate-300 text-slate-800 rounded-lg p-2.5 text-xs font-medium cursor-pointer"
                         >
                           <option value="">-- Unmapped (Skip or defaults) --</option>
                           {contentHeaders.map(h => (
@@ -1008,7 +1008,7 @@ export default function AutoListerDashboard() {
             {/* Header */}
             <div className="flex items-center justify-between flex-wrap gap-4">
               <div>
-                <h2 className="text-xl font-bold tracking-tight text-slate-100">Selling Price Adjuster</h2>
+                <h2 className="text-xl font-bold tracking-tight text-slate-900">Selling Price Adjuster</h2>
                 <p className="text-xs text-slate-400 mt-1">
                   Adjust selling prices individually or bulk update specific product categories. High-fidelity .9 pricing is auto-calculated.
                 </p>
@@ -1017,7 +1017,7 @@ export default function AutoListerDashboard() {
               <div className="flex gap-3">
                 <button 
                   onClick={() => setActiveTab("mapper")}
-                  className="px-4 py-2 text-xs rounded-lg border border-slate-700 text-slate-400 hover:text-slate-200 transition"
+                  className="px-4 py-2 text-xs rounded-lg border border-slate-300 text-slate-400 hover:text-slate-800 transition"
                 >
                   ← Mapping Review
                 </button>
@@ -1031,11 +1031,11 @@ export default function AutoListerDashboard() {
             </div>
 
             {/* BULK DISCOUNT CONFIGURATION PANEL */}
-            <div className="glass-panel rounded-2xl p-5 flex flex-wrap items-center justify-between gap-5 bg-slate-950/30">
+            <div className="glass-panel rounded-2xl p-5 flex flex-wrap items-center justify-between gap-5 bg-white/30">
               <div className="flex items-center gap-3">
                 <div className="text-lg">💰</div>
                 <div className="flex flex-col">
-                  <span className="text-xs font-semibold text-slate-200">Bulk Category Discount Adjuster</span>
+                  <span className="text-xs font-semibold text-slate-800">Bulk Category Discount Adjuster</span>
                   <span className="text-[10px] text-slate-400">Configure default selling prices in a single click</span>
                 </div>
               </div>
@@ -1046,7 +1046,7 @@ export default function AutoListerDashboard() {
                   <select 
                     value={bulkDiscountDivision}
                     onChange={(e) => setBulkDiscountDivision(e.target.value)}
-                    className="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg p-2 font-medium"
+                    className="bg-slate-50 border border-slate-300 text-slate-800 text-xs rounded-lg p-2 font-medium"
                   >
                     <option value="ALL">All Categories</option>
                     <option value="APPAREL">Apparel Only</option>
@@ -1063,7 +1063,7 @@ export default function AutoListerDashboard() {
                       max="100"
                       value={bulkDiscountPct}
                       onChange={(e) => setBulkDiscountPct(e.target.value)}
-                      className="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg p-2 w-16 text-center font-bold"
+                      className="bg-slate-50 border border-slate-300 text-slate-800 text-xs rounded-lg p-2 w-16 text-center font-bold"
                     />
                     <span className="text-xs text-slate-400">% OFF</span>
                   </div>
@@ -1084,7 +1084,7 @@ export default function AutoListerDashboard() {
               {/* Filters Search Bar */}
               <div className="flex justify-between items-center gap-4 flex-wrap">
                 <div className="flex items-center gap-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400">Identified Color-Style Groups</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-600">Identified Color-Style Groups</h3>
                   <span className="text-[10px] font-mono text-slate-500">{filteredProducts.length} entries shown</span>
                 </div>
 
@@ -1094,12 +1094,12 @@ export default function AutoListerDashboard() {
                     placeholder="Search color link/SKU..."
                     value={searchPriceQuery}
                     onChange={(e) => setSearchPriceQuery(e.target.value)}
-                    className="bg-slate-900 border border-slate-800 text-slate-300 placeholder-slate-600 rounded-lg px-3 py-2 text-xs w-60"
+                    className="bg-slate-50 border border-slate-200 text-slate-700 placeholder-slate-400 rounded-lg px-3 py-2 text-xs w-60"
                   />
                   <select 
                     value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
-                    className="bg-slate-900 border border-slate-800 text-slate-300 text-xs rounded-lg px-3 py-2"
+                    className="bg-slate-50 border border-slate-200 text-slate-700 text-xs rounded-lg px-3 py-2"
                   >
                     <option value="ALL">All Categories</option>
                     <option value="APPAREL">Apparel</option>
@@ -1109,10 +1109,10 @@ export default function AutoListerDashboard() {
               </div>
 
               {/* Data Table */}
-              <div className="overflow-x-auto custom-scroll border border-slate-800 bg-slate-950/20 rounded-xl">
+              <div className="overflow-x-auto custom-scroll border border-slate-200 bg-slate-50 rounded-xl">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-slate-800 bg-slate-900/60 text-slate-400 font-semibold tracking-wide">
+                    <tr className="border-b border-slate-200 bg-slate-100/90 text-slate-700 font-semibold tracking-wide">
                       <th className="p-4">Color-Style SKU Link</th>
                       <th className="p-4">Division</th>
                       <th className="p-4">Base Compare-At Price (MRP)</th>
@@ -1128,10 +1128,10 @@ export default function AutoListerDashboard() {
                         : 0;
 
                       return (
-                        <tr key={p.link} className="border-b border-slate-900 hover:bg-slate-900/10 transition text-slate-300">
-                          <td className="p-4 font-mono font-bold text-indigo-400">{p.link}</td>
+                        <tr key={p.link} className="border-b border-slate-900 hover:bg-slate-50/10 transition text-slate-700">
+                          <td className="p-4 font-mono font-bold text-emerald-600">{p.link}</td>
                           <td className="p-4">
-                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-slate-400 font-semibold">
+                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 border border-slate-300 text-slate-700 font-semibold">
                               {p.division}
                             </span>
                           </td>
@@ -1139,8 +1139,8 @@ export default function AutoListerDashboard() {
                           <td className="p-4">
                             <span className={`text-[10px] font-bold font-mono px-2 py-0.5 rounded ${
                               discountPercentage > 0 
-                                ? "bg-teal-500/10 text-teal-400 border border-teal-500/10" 
-                                : "bg-slate-800 text-slate-500"
+                                ? "bg-teal-500/10 text-emerald-600 border border-teal-500/10" 
+                                : "bg-slate-100 text-slate-500"
                             }`}>
                               {discountPercentage > 0 ? `${discountPercentage}% OFF` : "No discount"}
                             </span>
@@ -1152,7 +1152,7 @@ export default function AutoListerDashboard() {
                                 type="number" 
                                 value={sellingPrice}
                                 onChange={(e) => handlePriceChange(p.link, e.target.value)}
-                                className="bg-slate-900 border border-slate-700 text-slate-100 font-bold rounded-lg px-2.5 py-1.5 text-xs w-28 text-right focus:border-indigo-500 transition"
+                                className="bg-slate-50 border border-slate-300 text-slate-900 font-bold rounded-lg px-2.5 py-1.5 text-xs w-28 text-right focus:border-indigo-500 transition"
                               />
                             </div>
                           </td>
@@ -1175,7 +1175,7 @@ export default function AutoListerDashboard() {
             {/* Header */}
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold tracking-tight text-slate-100">Scanner & Shopify CSV Compiler</h2>
+                <h2 className="text-xl font-bold tracking-tight text-slate-900">Scanner & Shopify CSV Compiler</h2>
                 <p className="text-xs text-slate-400 mt-1">
                   Scanner detects syntax warnings (duplicate barcode links, missing apparel size matrices) prior to building standard CSV exports.
                 </p>
@@ -1183,7 +1183,7 @@ export default function AutoListerDashboard() {
 
               <button 
                 onClick={() => setActiveTab("pricing")}
-                className="px-4 py-2 text-xs rounded-lg border border-slate-700 text-slate-400 hover:text-slate-200 transition"
+                className="px-4 py-2 text-xs rounded-lg border border-slate-300 text-slate-400 hover:text-slate-800 transition"
               >
                 ← Back to Pricing
               </button>
@@ -1194,8 +1194,8 @@ export default function AutoListerDashboard() {
               
               {/* SCANNER REPORT LIST (LEFT) */}
               <div className="xl:col-span-2 glass-panel rounded-2xl p-6 flex flex-col gap-5">
-                <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400">Scanner Logs Terminal</h3>
+                <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-600">Scanner Logs Terminal</h3>
                   
                   <div className="flex items-center gap-2">
                     <button 
@@ -1203,7 +1203,7 @@ export default function AutoListerDashboard() {
                       className={`px-2 py-0.5 rounded text-[9px] font-bold font-mono transition ${
                         validationFilter === "ALL" 
                           ? "bg-indigo-600 text-white" 
-                          : "bg-slate-900 text-slate-400 hover:bg-slate-800"
+                          : "bg-slate-50 text-slate-400 hover:bg-slate-100"
                       }`}
                     >
                       ALL ({validationReport.length})
@@ -1213,7 +1213,7 @@ export default function AutoListerDashboard() {
                       className={`px-2 py-0.5 rounded text-[9px] font-bold font-mono transition ${
                         validationFilter === "ERROR" 
                           ? "bg-red-500/20 text-red-400 border border-red-500/10" 
-                          : "bg-slate-900 text-slate-400 hover:bg-slate-800"
+                          : "bg-slate-50 text-slate-400 hover:bg-slate-100"
                       }`}
                     >
                       ERRORS ({validationReport.filter(w => w.type === "ERROR").length})
@@ -1223,7 +1223,7 @@ export default function AutoListerDashboard() {
                       className={`px-2 py-0.5 rounded text-[9px] font-bold font-mono transition ${
                         validationFilter === "WARNING" 
                           ? "bg-amber-500/20 text-amber-400 border border-amber-500/10" 
-                          : "bg-slate-900 text-slate-400 hover:bg-slate-800"
+                          : "bg-slate-50 text-slate-400 hover:bg-slate-100"
                       }`}
                     >
                       WARNINGS ({validationReport.filter(w => w.type === "WARNING").length})
@@ -1254,12 +1254,12 @@ export default function AutoListerDashboard() {
                             <div className="flex items-center justify-between">
                               <span className="font-mono text-[9px] font-bold uppercase tracking-wider text-slate-400">{w.type} log</span>
                               {w.sku && (
-                                <span className="font-mono text-[8px] bg-slate-950 px-2 py-0.5 rounded text-indigo-400 border border-indigo-500/5">
+                                <span className="font-mono text-[8px] bg-white px-2 py-0.5 rounded text-emerald-600 border border-indigo-500/5">
                                   SKU: {w.sku}
                                 </span>
                               )}
                             </div>
-                            <p className="text-xs mt-1.5 leading-relaxed text-slate-300 font-medium">{w.message}</p>
+                            <p className="text-xs mt-1.5 leading-relaxed text-slate-700 font-medium">{w.message}</p>
                           </div>
                         </div>
                       ))
@@ -1272,7 +1272,7 @@ export default function AutoListerDashboard() {
                 
                 {/* Generation control panel */}
                 <div className="glass-panel rounded-2xl p-6 flex flex-col gap-4 text-center">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 border-b border-slate-800 pb-3 text-left">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-600 border-b border-slate-200 pb-3 text-left">
                     CSV Compilation Manager
                   </h3>
 
@@ -1303,24 +1303,24 @@ export default function AutoListerDashboard() {
 
                 {/* Direct download center */}
                 {genResult && (
-                  <div className="glass-panel rounded-2xl p-6 flex flex-col gap-5 text-center bg-slate-900/40 border-emerald-500/10">
+                  <div className="glass-panel rounded-2xl p-6 flex flex-col gap-5 text-center bg-slate-50/40 border-emerald-500/20">
                     <div className="w-12 h-12 rounded-full bg-emerald-500/15 border border-emerald-500/20 text-emerald-400 text-xl flex items-center justify-center mx-auto animate-bounce">
                       ✓
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold text-slate-100">Shopify CSV Built</h4>
+                      <h4 className="text-sm font-bold text-slate-900">Shopify CSV Built</h4>
                       <p className="text-[10px] text-slate-400 mt-1 max-w-xs mx-auto">
                         Variant grouping joins and metafield compiles completed. Encoded in utf-8-sig format for Excel.
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3 bg-slate-950/40 border border-slate-800 p-4 rounded-xl">
+                    <div className="grid grid-cols-2 gap-3 bg-slate-50 border border-slate-200 p-4 rounded-xl">
                       <div className="text-center">
-                        <div className="text-lg font-bold text-indigo-400 font-mono">{genResult.totalProducts}</div>
+                        <div className="text-lg font-bold text-emerald-600 font-mono">{genResult.totalProducts}</div>
                         <div className="text-[8px] uppercase font-bold tracking-wider text-slate-500 mt-1">Products</div>
                       </div>
-                      <div className="text-center border-l border-slate-800">
-                        <div className="text-lg font-bold text-teal-400 font-mono">{genResult.totalVariants}</div>
+                      <div className="text-center border-l border-slate-200">
+                        <div className="text-lg font-bold text-emerald-600 font-mono">{genResult.totalVariants}</div>
                         <div className="text-[8px] uppercase font-bold tracking-wider text-slate-500 mt-1">Variants</div>
                       </div>
                     </div>
@@ -1347,7 +1347,7 @@ export default function AutoListerDashboard() {
             
             {/* Header */}
             <div>
-              <h2 className="text-xl font-bold tracking-tight text-slate-100">Historical Audit Explorer</h2>
+              <h2 className="text-xl font-bold tracking-tight text-slate-900">Historical Audit Explorer</h2>
               <p className="text-xs text-slate-400 mt-1">
                 Browse database run history logs from local SQLite memory. Grab download links for all generated outputs.
               </p>
@@ -1356,20 +1356,20 @@ export default function AutoListerDashboard() {
             {/* Log table panel */}
             <div className="glass-panel rounded-2xl p-6">
               
-              <div className="flex justify-between items-center mb-4 border-b border-slate-800 pb-3 flex-wrap gap-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-indigo-400">Compilation Run History Logs</span>
+              <div className="flex justify-between items-center mb-4 border-b border-slate-200 pb-3 flex-wrap gap-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">Compilation Run History Logs</span>
                 <span className="text-[10px] font-mono text-slate-500">{historyLogs.length} runs recorded</span>
               </div>
 
               {historyLogs.length === 0 ? (
-                <div className="text-center py-12 text-slate-500 border border-dashed border-slate-800 rounded-xl bg-slate-950/10 text-xs font-semibold">
+                <div className="text-center py-12 text-slate-500 border border-dashed border-slate-200 rounded-xl bg-slate-50/50 text-xs font-semibold">
                   No past processing runs found. Upload files inside the hub to compile your first D2C Shopify list.
                 </div>
               ) : (
-                <div className="overflow-x-auto custom-scroll border border-slate-800 bg-slate-950/20 rounded-xl">
+                <div className="overflow-x-auto custom-scroll border border-slate-200 bg-slate-50 rounded-xl">
                   <table className="w-full text-left text-xs border-collapse">
                     <thead>
-                      <tr className="border-b border-slate-800 bg-slate-900/60 text-slate-400 font-semibold tracking-wide">
+                      <tr className="border-b border-slate-200 bg-slate-100/90 text-slate-700 font-semibold tracking-wide">
                         <th className="p-4">Run ID</th>
                         <th className="p-4">Date & Time</th>
                         <th className="p-4">Mastersheet Name</th>
@@ -1381,17 +1381,17 @@ export default function AutoListerDashboard() {
                     </thead>
                     <tbody>
                       {historyLogs.map(log => (
-                        <tr key={log.id} className="border-b border-slate-900 hover:bg-slate-900/10 transition text-slate-300">
-                          <td className="p-4 font-mono font-bold text-indigo-400">#{log.id}</td>
+                        <tr key={log.id} className="border-b border-slate-900 hover:bg-slate-50/10 transition text-slate-700">
+                          <td className="p-4 font-mono font-bold text-emerald-600">#{log.id}</td>
                           <td className="p-4 font-medium text-slate-400">{new Date(log.timestamp).toLocaleString()}</td>
-                          <td className="p-4 font-semibold text-slate-300 max-w-xs truncate">{log.mastersheet_name}</td>
-                          <td className="p-4 font-semibold text-slate-300 max-w-xs truncate">{log.contentsheet_name}</td>
-                          <td className="p-4 font-mono font-bold text-slate-200">{log.total_products}</td>
-                          <td className="p-4 font-mono font-bold text-teal-400">{log.total_variants}</td>
+                          <td className="p-4 font-semibold text-slate-700 max-w-xs truncate">{log.mastersheet_name}</td>
+                          <td className="p-4 font-semibold text-slate-700 max-w-xs truncate">{log.contentsheet_name}</td>
+                          <td className="p-4 font-mono font-bold text-slate-800">{log.total_products}</td>
+                          <td className="p-4 font-mono font-bold text-emerald-600">{log.total_variants}</td>
                           <td className="p-4 text-right">
                             <a 
                               href={`${API_BASE}/api/download/${log.output_csv_name}`}
-                              className="px-3 py-1.5 rounded bg-indigo-600/20 border border-indigo-500/25 hover:bg-indigo-600 text-indigo-300 hover:text-white font-bold text-[10px] transition uppercase tracking-wider"
+                              className="px-3 py-1.5 rounded bg-indigo-600/20 border border-emerald-500/25 hover:bg-indigo-600 text-emerald-700 hover:text-white font-bold text-[10px] transition uppercase tracking-wider"
                             >
                               ⬇ Download
                             </a>
@@ -1414,7 +1414,7 @@ export default function AutoListerDashboard() {
             
             {/* Header */}
             <div>
-              <h2 className="text-xl font-bold tracking-tight text-slate-100 font-sans">Matrixify Populator</h2>
+              <h2 className="text-xl font-bold tracking-tight text-slate-900 font-sans">Matrixify Populator</h2>
               <p className="text-xs text-slate-400 mt-1 font-sans">
                 Upload your Matrixify spreadsheet and the corresponding Content Copy Sheet. The engine will automatically split multi-line bullet points and map descriptions.
               </p>
@@ -1425,12 +1425,12 @@ export default function AutoListerDashboard() {
               
               {/* UPLOAD PANEL */}
               <div className="glass-panel rounded-2xl p-6 flex flex-col gap-6">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 border-b border-slate-800 pb-3 font-sans">Matrixify Workspace</h3>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-600 border-b border-slate-200 pb-3 font-sans">Matrixify Workspace</h3>
                 
                 <form onSubmit={handleMatrixifySubmit} className="flex flex-col gap-5">
                   
                   {/* Matrixify Sheet Upload */}
-                  <div className="border border-dashed border-slate-800 hover:border-indigo-500/40 bg-slate-950/20 rounded-xl p-5 flex items-center justify-between relative transition group">
+                  <div className="border border-dashed border-slate-200 hover:border-indigo-500/40 bg-slate-50 rounded-xl p-5 flex items-center justify-between relative transition group">
                     <input 
                       type="file" 
                       accept=".xlsx"
@@ -1438,9 +1438,9 @@ export default function AutoListerDashboard() {
                       className="absolute inset-0 opacity-0 cursor-pointer"
                     />
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-indigo-500/5 flex items-center justify-center text-indigo-400 font-bold text-sm">📊</div>
+                      <div className="w-10 h-10 rounded-lg bg-indigo-500/5 flex items-center justify-center text-emerald-600 font-bold text-sm">📊</div>
                       <div className="flex flex-col">
-                        <span className="text-xs font-semibold text-slate-200 leading-snug font-sans">
+                        <span className="text-xs font-semibold text-slate-800 leading-snug font-sans">
                           {matrixifyFile ? matrixifyFile.name : "Select Matrixify Excel File"}
                         </span>
                         <span className="text-[10px] text-slate-500 mt-0.5 font-sans">Accepts Excel (.xlsx) file exported from Shopify</span>
@@ -1450,7 +1450,7 @@ export default function AutoListerDashboard() {
                   </div>
 
                   {/* Content Copy Upload */}
-                  <div className="border border-dashed border-slate-800 hover:border-indigo-500/40 bg-slate-950/20 rounded-xl p-5 flex items-center justify-between relative transition group">
+                  <div className="border border-dashed border-slate-200 hover:border-indigo-500/40 bg-slate-50 rounded-xl p-5 flex items-center justify-between relative transition group">
                     <input 
                       type="file" 
                       accept=".xlsx"
@@ -1458,9 +1458,9 @@ export default function AutoListerDashboard() {
                       className="absolute inset-0 opacity-0 cursor-pointer"
                     />
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-indigo-500/5 flex items-center justify-center text-indigo-400 font-bold text-sm">📝</div>
+                      <div className="w-10 h-10 rounded-lg bg-indigo-500/5 flex items-center justify-center text-emerald-600 font-bold text-sm">📝</div>
                       <div className="flex flex-col">
-                        <span className="text-xs font-semibold text-slate-200 leading-snug font-sans">
+                        <span className="text-xs font-semibold text-slate-800 leading-snug font-sans">
                           {matrixifyContentSheet ? matrixifyContentSheet.name : "Select Content Copy Sheet"}
                         </span>
                         <span className="text-[10px] text-slate-500 mt-0.5 font-sans">Accepts Excel (.xlsx) containing descriptions & bullet points</span>
@@ -1483,10 +1483,10 @@ export default function AutoListerDashboard() {
                 
                 {/* Information Card */}
                 <div className="glass-panel rounded-2xl p-6 flex flex-col gap-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 border-b border-slate-800 pb-3 font-sans">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-600 border-b border-slate-200 pb-3 font-sans">
                     Mapping Rules Details
                   </h3>
-                  <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                  <p className="text-xs text-slate-700 leading-relaxed font-sans">
                     This utility maps product descriptions and splits multi-line bullet points from the Content Sheet to target metafields in the Matrixify spreadsheet:
                   </p>
                   <ul className="text-slate-400 text-xs list-disc pl-5 flex flex-col gap-2 font-sans">
@@ -1496,12 +1496,12 @@ export default function AutoListerDashboard() {
                 </div>
 
                 {matrixifyResult && (
-                  <div className="glass-panel rounded-2xl p-6 flex flex-col gap-5 text-center bg-slate-900/40 border-emerald-500/10">
+                  <div className="glass-panel rounded-2xl p-6 flex flex-col gap-5 text-center bg-slate-50/40 border-emerald-500/20">
                     <div className="w-12 h-12 rounded-full bg-emerald-500/15 border border-emerald-500/20 text-emerald-400 text-xl flex items-center justify-center mx-auto animate-bounce">
                       ✓
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold text-slate-100 font-sans">Matrixify Sheet Populated!</h4>
+                      <h4 className="text-sm font-bold text-slate-900 font-sans">Matrixify Sheet Populated!</h4>
                       <p className="text-[10px] text-slate-400 mt-1 max-w-xs mx-auto font-sans">
                         Descriptions mapped and bullet points separated successfully.
                       </p>
@@ -1524,7 +1524,7 @@ export default function AutoListerDashboard() {
         )}
 
         {/* FOOTER */}
-        <footer className="mt-auto pt-8 pb-4 text-center border-t border-emerald-500/10 text-xs text-slate-500 font-mono">
+        <footer className="mt-auto pt-8 pb-4 text-center border-t border-emerald-500/20 text-xs text-slate-500 font-mono">
           Made by Manan. All Rights Reversed.
         </footer>
       </main>
