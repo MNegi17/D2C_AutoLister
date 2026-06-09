@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - HOST=0.0.0.0
+      # By default, use SQLite within the persistent Docker volume. Override with external Postgres URL if hosting.
+      - DATABASE_URL=sqlite:////app/autolister.db
+    volumes:
+      - backend-db:/app
+      - backend-uploads:/uploads
+      - backend-outputs:/outputs
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      # Directs client-side API requests to the local backend gateway
+      - NEXT_PUBLIC_API_URL=http://localhost:8080
+    depends_on:
+      - backend
+
+volumes:
+  backend-db:
+  backend-uploads:
+  backend-outputs:

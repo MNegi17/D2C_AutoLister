@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Databases
+backend/autolister.db
+
+# Temporary Uploads/Outputs
+uploads/
+outputs/
+!outputs/shopify_integration_test_output.csv
+
+# Next.js / Node
+node_modules/
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+.env*.local
+
+# OS
+.DS_Store
+Thumbs.db
