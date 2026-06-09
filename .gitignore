@@ -27,3 +27,6 @@ frontend/build/
 # OS
 .DS_Store
 Thumbs.db
+
+# Scratch/Temporary Scripts
+scratch/
