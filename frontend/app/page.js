@@ -516,8 +516,8 @@ export default function AutoListerDashboard() {
       {toast && (
         <div className={`fixed bottom-6 right-6 z-[100] px-6 py-4 rounded-xl border shadow-xl flex items-center gap-3 animate-toast ${
           toast.type === "error" 
-            ? "bg-red-950/80 border-red-500/30 text-red-200" 
-            : "bg-indigo-950/80 border-indigo-500/30 text-indigo-200"
+            ? "bg-red-50 border-red-200 text-red-800" 
+            : "bg-emerald-50 border-emerald-200 text-emerald-800"
         }`}>
           <span>{toast.type === "error" ? "🛑" : "✨"}</span>
           <span className="text-sm font-medium">{toast.message}</span>
@@ -525,7 +525,7 @@ export default function AutoListerDashboard() {
       )}
 
       {/* FIXED LEFT SIDEBAR */}
-      <aside className="w-80 bg-[#021008]/80 border-r border-emerald-500/10 flex flex-col p-6 sticky top-0 h-screen overflow-y-auto">
+      <aside className="w-80 bg-slate-950/80 border-r border-emerald-500/10 flex flex-col p-6 sticky top-0 h-screen overflow-y-auto">
         <div className="flex items-center gap-3 mb-8">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center font-bold text-base text-white shadow-lg shadow-emerald-500/20 pulse-glow">
             D2C
@@ -602,7 +602,7 @@ export default function AutoListerDashboard() {
         
         {/* LOADING OVERLAY SCENE */}
         {loading && (
-          <div className="absolute inset-0 bg-[#06080e]/90 backdrop-blur-md z-50 flex flex-col items-center justify-center gap-5">
+          <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex flex-col items-center justify-center gap-5">
             <div className="w-12 h-12 rounded-full border-4 border-indigo-500/15 border-t-indigo-500 animate-spin"></div>
             <p className="text-indigo-200 font-bold font-mono tracking-wide text-xs uppercase">{loadingMsg}</p>
           </div>
