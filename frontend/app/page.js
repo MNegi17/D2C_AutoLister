@@ -510,7 +510,7 @@ export default function AutoListerDashboard() {
   });
 
   return (
-    <div className="flex min-h-screen bg-[#06080e] text-slate-100 font-sans antialiased">
+    <div className="flex min-h-screen bg-background text-foreground font-sans antialiased">
       
       {/* PERSISTENT FLOATING NOTIFICATION */}
       {toast && (
@@ -525,10 +525,10 @@ export default function AutoListerDashboard() {
       )}
 
       {/* FIXED LEFT SIDEBAR */}
-      <aside className="w-80 bg-slate-950/70 border-r border-indigo-500/10 flex flex-col p-6 sticky top-0 h-screen overflow-y-auto">
+      <aside className="w-80 bg-[#021008]/80 border-r border-emerald-500/10 flex flex-col p-6 sticky top-0 h-screen overflow-y-auto">
         <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-teal-500 flex items-center justify-center font-bold text-lg text-white shadow-lg shadow-indigo-500/20 pulse-glow">
-            AL
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center font-bold text-base text-white shadow-lg shadow-emerald-500/20 pulse-glow">
+            D2C
           </div>
           <div>
             <h1 className="font-bold text-sm tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-slate-100 to-slate-300">
@@ -1523,6 +1523,10 @@ export default function AutoListerDashboard() {
           </div>
         )}
 
+        {/* FOOTER */}
+        <footer className="mt-auto pt-8 pb-4 text-center border-t border-emerald-500/10 text-xs text-slate-500 font-mono">
+          Made by Manan. All Rights Reversed.
+        </footer>
       </main>
 
     </div>
