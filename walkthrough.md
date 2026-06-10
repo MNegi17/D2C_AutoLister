@@ -1,59 +1,37 @@
-# Completion Walkthrough - Premium Frontend Dashboard Overhaul
+# Walkthrough - Production Hosting & Deployment
 
-We have successfully completed a major frontend architectural overhaul to address the cramped layout shrinkage bugs and deliver a state-of-the-art widescreen enterprise console dashboard for the **D2C Shopify AutoLister**.
-
----
-
-## Key Overhauls Implemented
-
-### 1. Widescreen Flexible Sidebar Layout ("Don't Shrink")
-- **The Issue**: A dynamic string interpolation inside a Tailwind grid column span declaration (`lg:col-span-${showHistory ? "3" : "4"}`) bypassed the Tailwind static scanner. Consequently, the utility classes `lg:col-span-3` and `lg:col-span-4` were never generated, squeezing the main workspace to a narrow 25% width (col-span-1) on the left of the screen.
-- **The Solution**: Re-engineered the application frame into a **Flexbox Widescreen Sidebar Layout**:
-  - **Left Navigation Column**: A fixed-width (`w-80`) dark-slate side menu containing the application logo, engine active indicator, SQLite database memory stats, and the main navigation buttons.
-  - **Right Content Workspace**: A scrollable widescreen pane (`flex-1`) that automatically stretches to cover 100% of the remaining screen space, ensuring full-width usability for all tables and configurations.
-
-### 2. The 5 Dedicated Processing Workspaces (Pages)
-The single-page cramped stepper has been upgraded into 5 dedicated, high-fidelity tabbed workspaces:
-1. **Upload & Rules Workspace**:
-   - Left side: Large file slots for Mastersheet, Content Copy Sheet, Shopify Template, and historical learning files.
-   - Right side: **SQLite Brand Assignment Rules** (inline division-to-brand mapping table) and **Myntra Spec Templates JSON format editor**. Users can view, edit, and save rules directly to their backend SQLite database with disappearing toast notifications.
-2. **Intelligent Column Synonym Mapper**:
-   - A wide, side-by-side console presenting column synonym mappings for both Mastersheet and Content Copy columns.
-   - Features semantic confidence color badges (high confidence synonym match, medium confidence fuzzy match, saved database override) with direct dropdowns that save overrides to SQLite in real-time.
-   - Fixed the `ReferenceError: SEMANTIC_THESAURUS is not defined` crash by defining the semantic thesaurus as a frontend constant.
-3. **Selling Price Adjuster Table**:
-   - A tabular spreadsheet showing all variant style-color SKU link groups with category division badges, MRPs, discount percentages, and final D2C selling price input inputs.
-   - Includes a **Bulk Discount Adjuster**: Apply a custom percentage discount (e.g. 35% OFF) to all products under a specific division (e.g. Apparel or Footwear) with one click.
-   - Fully searchable by style, SKU, or category.
-4. **Validation Scanner & CSV Compiler**:
-   - A high-tech "Scanner Logs Terminal" displaying syntax warning logs and fatal block-stopper error logs with custom filters (Errors, Warnings, All).
-   - A premium download card that reports grouping metrics and enables direct, CP-1252/UTF-8-BOM encoded CSV downloads after compile.
-5. **Historical Audit Explorer**:
-   - An integrated widescreen run log history table, listing past compiles, products grouped, variants created, and download links.
-
-### 3. Lookup Style Keys Filter Input
-- **The Feature**: Added a **"Lookup Style Keys to List"** multi-line text area input inside the Upload Hub.
-- **How It Works**: Users can paste a list of specific Style-Color codes (like `PGTOPW001955-BROWN`), separated by commas, newlines, or whitespace.
-- **Scoped Processing**: If keys are provided, the backend API and frontend dashboards filter the Mastersheet *before* analyzing. This limits previews, pricing overrides tables, validation warnings, and final compilation rows to only the requested products.
-
-### 4. Micro-Animations & Toast System
-- Built custom CSS animations in [globals.css](file:///c:/Users/Manann/Desktop/D2C_AutoLister/frontend/app/globals.css) for sliding toast alert cards.
-- Subtle toast popups appear in the bottom-right corner whenever columns are auto-learned, brand rules are updated, or bulk discounts are applied.
+I have successfully updated the **D2C Shopify AutoLister** database configurations and packaged the services for production hosting and deployment. 
 
 ---
 
-## Verification & Compilation Status
+## What Was Changed
 
-We successfully triggered a local hot-reload and verified the Next.js compiler output. The compilation completed without any warning or syntax exception:
+### 1. Database Portability Integration
+- Integrated **Neon.tech (Serverless Postgres)** compatibility by dynamically reading `DATABASE_URL` in [database.py](file:///c:/Users/Manann/Desktop/D2C_AutoLister/backend/database.py).
+- Defaults to the local SQLite database if `DATABASE_URL` is absent, ensuring local configurations continue to run out-of-the-box.
 
-```
-▲ Next.js 16.2.7 (Turbopack)
-  - Local: http://localhost:3000
-  - Environments: API_BASE=http://localhost:8000
+### 2. Port Binding Optimization
+- Configured [backend/main.py](file:///c:/Users/Manann/Desktop/D2C_AutoLister/backend/main.py) to bind to dynamically injected `PORT` and `HOST` variables.
 
-✓ Compiled / in 421ms
-✓ PostCSS build of globals.css processed successfully.
-[OK] HTTP GET http://localhost:3000 returned status 200 OK (Clean HTML Render).
-```
+### 3. Containerization
+- **Backend Dockerfile** ([backend/Dockerfile](file:///c:/Users/Manann/Desktop/D2C_AutoLister/backend/Dockerfile)): Target Python 3.11-slim with system libraries.
+- **Frontend Dockerfile** ([frontend/Dockerfile](file:///c:/Users/Manann/Desktop/D2C_AutoLister/frontend/Dockerfile)): Target Next.js standalone runner.
+- **Docker Compose** ([docker-compose.yml](file:///c:/Users/Manann/Desktop/D2C_AutoLister/docker-compose.yml)): Coordinate local VPS self-hosting.
 
-Both backend and frontend servers are active, responsive, and fully synchronized with the SQLite database schemas!
+### 4. Step-by-Step Hosting Documentation
+- Wrote full guides in the root [README.md](file:///c:/Users/Manann/Desktop/D2C_AutoLister/README.md) detailing Vercel, Render, Railway, and Docker deploy scenarios.
+
+### 5. UI Customizations (Professional Light Theme & Branding Overhaul)
+- **Modern Light Theme**: Implemented a clean, high-contrast light green/emerald and white design (`#f4f8f6` background).
+- **High Font Contrast**: Cleaned up the layout by replacing faint text classes with clear selectors like `text-slate-900` for headings and `text-slate-700` for cells/body elements in [page.js](file:///c:/Users/Manann/Desktop/D2C_AutoLister/frontend/app/page.js).
+- **Flat Enterprise Branding**: Replaced the glowing gradient badge in the sidebar with a flat corporate text logo showing `"D2C AutoLister v1.0 • Enterprise"`.
+- **Top-Right Profile Initial**: Removed the bottom footer and placed a clean `"MN"` avatar badge in the top-right corner.
+- **Button Theme Alignment**: Aligned all buttons (like mappings trigger and overrides actions) to standard emerald green colors.
+
+### 6. Runtime API URL Settings & Connection Health Check
+- **The Issue**: On the live website `d2c-autolister-pro.up.railway.app`, opening the page on another computer failed to load rules/categories because the backend base URL resolved statically to `http://localhost:8080` (which only exists on your local machine).
+- **The Solution**: 
+  - Overhauled the API resolver in [page.js](file:///c:/Users/Manann/Desktop/D2C_AutoLister/frontend/app/page.js) to resolve the backend base URL dynamically from `localStorage` at runtime.
+  - Added a **settings gear icon** in the top-right corner next to the `"MN"` initials badge. Clicking it opens a modal allowing users to save their live FastAPI Railway URL (e.g. `https://d2c-autolister-backend.up.railway.app`) at runtime.
+  - Built a **"Test Connection"** checker to test backend responsiveness before saving.
+  - Implemented an **Offline Connection Warning Alert** banner that automatically pops up at the top of the dashboard if the backend API is unreachable.
