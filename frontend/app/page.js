@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 
 const API_BASE = typeof window !== "undefined"
-  ? (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080")
+  ? (localStorage.getItem("NEXT_PUBLIC_API_URL") || process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080")
   : "http://localhost:8080";
 
 const SEMANTIC_THESAURUS = {
@@ -88,13 +88,72 @@ export default function AutoListerDashboard() {
   // Notifications (toast alert)
   const [toast, setToast] = useState(null);
 
+  // Settings & Connection States
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [inputApiUrl, setInputApiUrl] = useState(API_BASE);
+  const [testingConnection, setTestingConnection] = useState(false);
+  const [connectionError, setConnectionError] = useState(false);
+
+  const loadAllData = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/learning-status`);
+      if (!res.ok) throw new Error("Connection failed");
+      const data = await res.json();
+      setLearningStats(data);
+      setConnectionError(false);
+      
+      // Load rest of configuration tables
+      fetchHistory();
+      fetchBrandRules();
+      fetchSpecTemplates();
+    } catch (e) {
+      console.error("Backend connection failure:", e);
+      setConnectionError(true);
+    }
+  };
+
   // Fetch SQLite configs and audit history logs on mount
   useEffect(() => {
-    fetchStats();
-    fetchHistory();
-    fetchBrandRules();
-    fetchSpecTemplates();
+    loadAllData();
   }, []);
+
+  const handleTestConnection = async () => {
+    if (!inputApiUrl.trim()) {
+      showToast("Please enter an API URL", "error");
+      return;
+    }
+    setTestingConnection(true);
+    try {
+      let formattedUrl = inputApiUrl.trim();
+      if (formattedUrl.endsWith("/")) {
+        formattedUrl = formattedUrl.slice(0, -1);
+      }
+      const res = await fetch(`${formattedUrl}/api/learning-status`);
+      if (res.ok) {
+        showToast("Backend connection verified successfully!", "success");
+      } else {
+        showToast("Backend returned an error. Verify URL.", "error");
+      }
+    } catch (e) {
+      showToast("Failed to connect. Backend offline or URL incorrect.", "error");
+    } finally {
+      setTestingConnection(false);
+    }
+  };
+
+  const handleSaveSettings = () => {
+    let formattedUrl = inputApiUrl.trim();
+    if (formattedUrl.endsWith("/")) {
+      formattedUrl = formattedUrl.slice(0, -1);
+    }
+    if (typeof window !== "undefined") {
+      localStorage.setItem("NEXT_PUBLIC_API_URL", formattedUrl);
+    }
+    showToast("API URL saved! Reloading...", "success");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  };
 
   const showToast = (message, type = "success") => {
     setToast({ message, type });
@@ -599,12 +658,40 @@ export default function AutoListerDashboard() {
       {/* FLEX RIGHT CORE CONTENT WORKSPACE */}
       <main className="flex-1 min-h-screen p-8 overflow-y-auto relative flex flex-col">
         
-        {/* TOP RIGHT PROFILE INITIALS BADGE */}
-        <div className="absolute top-6 right-8 flex items-center gap-2 z-10">
+        {/* TOP RIGHT PROFILE INITIALS BADGE WITH SETTINGS GEAR */}
+        <div className="absolute top-6 right-8 flex items-center gap-3.5 z-10">
+          <button 
+            onClick={() => setShowSettingsModal(true)}
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer"
+            title="Configure Backend Connection"
+          >
+            ⚙️
+          </button>
           <div className="w-8 h-8 rounded-full bg-emerald-100 border border-emerald-200 text-emerald-800 font-bold text-xs flex items-center justify-center shadow-sm" title="User Session: MN">
             MN
           </div>
         </div>
+
+        {/* CONNECTION STATUS ALERT BANNER */}
+        {connectionError && (
+          <div className="mb-6 p-4 rounded-xl border border-yellow-200 bg-yellow-50 text-yellow-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm z-10">
+            <div className="flex items-center gap-3">
+              <span className="text-xl">⚠️</span>
+              <div>
+                <strong className="text-xs font-bold font-sans">Backend Connection Offline</strong>
+                <p className="text-[11px] text-yellow-700 mt-0.5">
+                  The dashboard is unable to reach the listing engine at <code className="bg-white/60 px-1 py-0.5 rounded font-mono font-bold text-[10px]">{API_BASE}</code>. Please configure your live Railway backend URL.
+                </p>
+              </div>
+            </div>
+            <button 
+              onClick={() => setShowSettingsModal(true)}
+              className="px-3 py-1.5 rounded-lg bg-yellow-600 hover:bg-yellow-700 text-white font-bold text-[10px] shadow-sm transition whitespace-nowrap cursor-pointer"
+            >
+              Configure Connection
+            </button>
+          </div>
+        )}
         
         {/* LOADING OVERLAY SCENE */}
         {loading && (
@@ -1531,6 +1618,64 @@ export default function AutoListerDashboard() {
 
 
       </main>
+
+      {/* CONNECTION SETTINGS MODAL */}
+      {showSettingsModal && (
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-md w-full p-6 flex flex-col gap-5">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 className="text-sm font-bold text-slate-800 font-sans flex items-center gap-2">
+                ⚙️ Backend Connection Settings
+              </h3>
+              <button 
+                onClick={() => setShowSettingsModal(false)}
+                className="text-slate-400 hover:text-slate-600 text-sm cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+            
+            <div className="flex flex-col gap-2.5">
+              <label className="text-[10px] uppercase font-bold tracking-wider text-slate-500">FastAPI Backend API Base URL</label>
+              <input 
+                type="text" 
+                value={inputApiUrl}
+                onChange={(e) => setInputApiUrl(e.target.value)}
+                placeholder="https://your-backend-xxxx.up.railway.app"
+                className="w-full bg-slate-50 border border-slate-300 text-slate-800 rounded-lg px-3 py-2 text-xs focus:border-emerald-500 outline-none font-sans"
+              />
+              <p className="text-[10px] text-slate-400 font-sans">
+                Specify the public URL of your FastAPI backend service deployed on Railway. Example: <code className="bg-slate-100 px-1 py-0.5 rounded">https://d2c-autolister-backend.up.railway.app</code>
+              </p>
+            </div>
+
+            <div className="flex justify-between items-center pt-2 border-t border-slate-100 gap-3">
+              <button 
+                onClick={handleTestConnection}
+                disabled={testingConnection}
+                className="px-3.5 py-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:bg-slate-200 font-bold text-xs transition cursor-pointer font-sans"
+              >
+                {testingConnection ? "Testing..." : "Test Connection"}
+              </button>
+              
+              <div className="flex gap-2.5 font-sans">
+                <button 
+                  onClick={() => setShowSettingsModal(false)}
+                  className="px-3.5 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold text-xs transition cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={handleSaveSettings}
+                  className="px-3.5 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 font-bold text-xs shadow-md shadow-emerald-500/10 transition cursor-pointer"
+                >
+                  Save & Apply
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
