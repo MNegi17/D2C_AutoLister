@@ -125,6 +125,9 @@ export default function AutoListerDashboard() {
     setTestingConnection(true);
     try {
       let formattedUrl = inputApiUrl.trim();
+      if (!/^https?:\/\//i.test(formattedUrl)) {
+        formattedUrl = `https://${formattedUrl}`;
+      }
       if (formattedUrl.endsWith("/")) {
         formattedUrl = formattedUrl.slice(0, -1);
       }
@@ -143,6 +146,13 @@ export default function AutoListerDashboard() {
 
   const handleSaveSettings = () => {
     let formattedUrl = inputApiUrl.trim();
+    if (!formattedUrl) {
+      showToast("Please enter an API URL", "error");
+      return;
+    }
+    if (!/^https?:\/\//i.test(formattedUrl)) {
+      formattedUrl = `https://${formattedUrl}`;
+    }
     if (formattedUrl.endsWith("/")) {
       formattedUrl = formattedUrl.slice(0, -1);
     }
