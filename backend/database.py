@@ -100,6 +100,7 @@ def init_db():
                 CategorySpecTemplate(
                     division="FOOTWEAR",
                     template_format=(
+                        "Item Color: {Item Color}\n"
                         "Upper Material: {upper}\n"
                         "Sole: {sole}\n"
                         "Items Included in Packaging: 1 Pair {prod_name}\n"
@@ -109,6 +110,7 @@ def init_db():
                 CategorySpecTemplate(
                     division="APPAREL",
                     template_format=(
+                        "Item Color: {Item Color}\n"
                         "Fabric: {fabric}\n"
                         "Items Included in Packaging: {pack_term} {prod_name}\n"
                         "Commodity: {commodity}"
@@ -123,6 +125,12 @@ def init_db():
                 )
             ]
             db.add_all(default_templates)
+        else:
+            # Upgrade existing records to prepend Item Color if missing
+            for div in ["FOOTWEAR", "APPAREL"]:
+                tmpl = db.query(CategorySpecTemplate).filter(CategorySpecTemplate.division == div).first()
+                if tmpl and "Item Color" not in tmpl.template_format and "item_color" not in tmpl.template_format:
+                    tmpl.template_format = "Item Color: {Item Color}\n" + tmpl.template_format
             
         # 3. Insert default column mapping dictionary if empty
         if db.query(ColumnMapping).count() == 0:

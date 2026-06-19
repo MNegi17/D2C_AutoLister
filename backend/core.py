@@ -197,7 +197,7 @@ def generate_tags(division: str, category: str, gender: str) -> str:
     tags = [div, cat, gen_tag, "All Products", "NEW LAUNCH"]
     return ", ".join(tags)
 
-def generate_myntra_specs(division: str, category: str, gender: str, upper_mat: str, sole_mat: str, fabric_mat: str, db: Session) -> str:
+def generate_myntra_specs(division: str, category: str, gender: str, upper_mat: str, sole_mat: str, fabric_mat: str, item_color: str, db: Session) -> str:
     """
     Generates formatted custom Myntra Specs Info metafield string.
     Uses database-configured templates for category dependency.
@@ -241,9 +241,9 @@ def generate_myntra_specs(division: str, category: str, gender: str, upper_mat: 
         commodity = f"{c_gender} {sub_div} {prod_name}".replace("  ", " ").strip()
         
         if not template_str:
-            template_str = "Upper Material: {upper}\nSole: {sole}\nItems Included in Packaging: 1 Pair {prod_name}\nCommodity: {commodity}"
+            template_str = "Item Color: {Item Color}\nUpper Material: {upper}\nSole: {sole}\nItems Included in Packaging: 1 Pair {prod_name}\nCommodity: {commodity}"
             
-        return template_str.format(upper=u, sole=s, prod_name=prod_name, commodity=commodity)
+        return template_str.format(upper=u, sole=s, prod_name=prod_name, commodity=commodity, item_color=item_color, **{"Item Color": item_color})
         
     elif div_upper == "APPAREL":
         # Upper Material (Fabric), Items, Commodity
@@ -262,15 +262,15 @@ def generate_myntra_specs(division: str, category: str, gender: str, upper_mat: 
         commodity = f"{c_gender}'s {prod_name}"
         
         if not template_str:
-            template_str = "Fabric: {fabric}\nItems Included in Packaging: {pack_term} {prod_name}\nCommodity: {commodity}"
+            template_str = "Item Color: {Item Color}\nFabric: {fabric}\nItems Included in Packaging: {pack_term} {prod_name}\nCommodity: {commodity}"
             
-        return template_str.format(fabric=f_mat, pack_term=pack_term, prod_name=prod_name, commodity=commodity)
+        return template_str.format(fabric=f_mat, pack_term=pack_term, prod_name=prod_name, commodity=commodity, item_color=item_color, **{"Item Color": item_color})
         
     else:  # ACCESSORIES
         if not template_str:
             template_str = "Items Included in Packaging: 1 {prod_name}\nCommodity : {prod_name}"
             
-        return template_str.format(prod_name=prod_name)
+        return template_str.format(prod_name=prod_name, item_color=item_color, **{"Item Color": item_color})
 
 # --- CORE VALIDATION LAYER ---
 
