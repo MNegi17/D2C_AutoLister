@@ -169,7 +169,7 @@ def generate_shopify_csv(
         sole_mat = str(first_master_row.get(m_sole_col, "")).strip()
         fabric_mat = str(first_master_row.get(m_fabric_col, "")).strip()
         
-        specs_info = generate_myntra_specs(division, category, gender, upper_mat, sole_mat, fabric_mat, shade, db)
+        specs_info = generate_myntra_specs(division, category, gender, upper_mat, sole_mat, fabric_mat, str(link_val).strip(), db)
         
         # Determine Shopify option1 name
         opt1_name = "Size In Uk"

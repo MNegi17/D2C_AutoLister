@@ -268,7 +268,7 @@ def generate_myntra_specs(division: str, category: str, gender: str, upper_mat: 
         
     else:  # ACCESSORIES
         if not template_str:
-            template_str = "Items Included in Packaging: 1 {prod_name}\nCommodity : {prod_name}"
+            template_str = "Item Color: {Item Color}\nItems Included in Packaging: 1 {prod_name}\nCommodity : {prod_name}"
             
         return template_str.format(prod_name=prod_name, item_color=item_color, **{"Item Color": item_color})
 

@@ -119,6 +119,7 @@ def init_db():
                 CategorySpecTemplate(
                     division="ACCESSORIES",
                     template_format=(
+                        "Item Color: {Item Color}\n"
                         "Items Included in Packaging: 1 {prod_name}\n"
                         "Commodity : {prod_name}"
                     )
@@ -127,7 +128,7 @@ def init_db():
             db.add_all(default_templates)
         else:
             # Upgrade existing records to prepend Item Color if missing
-            for div in ["FOOTWEAR", "APPAREL"]:
+            for div in ["FOOTWEAR", "APPAREL", "ACCESSORIES"]:
                 tmpl = db.query(CategorySpecTemplate).filter(CategorySpecTemplate.division == div).first()
                 if tmpl and "Item Color" not in tmpl.template_format and "item_color" not in tmpl.template_format:
                     tmpl.template_format = "Item Color: {Item Color}\n" + tmpl.template_format
