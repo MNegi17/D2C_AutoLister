@@ -288,11 +288,50 @@ export default function AutoListerDashboard() {
     }
 
     setLoading(true);
+    setLoadingMsg("Preprocessing sheets in browser...");
+
+    // Helper to dynamically load SheetJS from CDN
+    const loadSheetJS = () => {
+      return new Promise((resolve, reject) => {
+        if (window.XLSX) {
+          resolve(window.XLSX);
+          return;
+        }
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
+        script.onload = () => resolve(window.XLSX);
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    };
+
+    let processedContentSheet = contentsheet;
+    try {
+      if (contentsheet && contentsheet.name.endsWith(".xlsx")) {
+        setLoadingMsg("Stripping heavy images from Content Sheet in browser...");
+        const XLSX = await loadSheetJS();
+        
+        // Read file to ArrayBuffer
+        const arrayBuffer = await contentsheet.arrayBuffer();
+        
+        // Parse with SheetJS
+        const workbook = XLSX.read(arrayBuffer, { type: "array" });
+        
+        // Write back using SheetJS (which strips all media, drawings, and images!)
+        const outputBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+        
+        // Create new Blob
+        processedContentSheet = new Blob([outputBuffer], { type: contentsheet.type });
+      }
+    } catch (err) {
+      console.error("Browser preprocessing failed, using original file:", err);
+    }
+
     setLoadingMsg("Uploading listing sheets and parsing column structures...");
 
     const formData = new FormData();
     formData.append("mastersheet", mastersheet);
-    formData.append("contentsheet", contentsheet);
+    formData.append("contentsheet", processedContentSheet, contentsheet.name);
     formData.append("template", template);
     if (historical) {
       formData.append("historical", historical);
