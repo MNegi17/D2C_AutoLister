@@ -359,6 +359,10 @@ def validate_listings(df_master: pd.DataFrame, master_mappings: dict, df_content
                         "sku": sku
                     })
 
+    # Track which style codes and style-color link values are active in df_master
+    active_master_links = set(df_master[m_link_col].astype(str).str.strip())
+    active_master_styles = set(df_master[m_barcode_col].astype(str).str.strip())
+
     # B. Check Content Sheet items (only if warnings limit not already reached)
     if not limit_reached:
         for idx, row in df_content.iterrows():
@@ -374,6 +378,10 @@ def validate_listings(df_master: pd.DataFrame, master_mappings: dict, df_content
             if not style_code and not title and not link_val:
                 continue
                 
+            # Only validate Content Sheet items that are active/present in df_master
+            if link_val not in active_master_links and style_code not in active_master_styles:
+                continue
+                
             if not style_code:
                 warnings.append({"type": "WARNING", "message": f"Row {idx+2} in Content Sheet is missing Style/Item Name", "sku": ""})
                 
@@ -384,6 +392,7 @@ def validate_listings(df_master: pd.DataFrame, master_mappings: dict, df_content
             if handle in seen_handles:
                 warnings.append({"type": "WARNING", "message": f"Duplicate Handle generated for Title: '{title}'", "sku": style_code})
             seen_handles.add(handle)
+
             
     if limit_reached:
         warnings.append({
