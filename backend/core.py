@@ -278,6 +278,7 @@ def validate_listings(df_master: pd.DataFrame, master_mappings: dict, df_content
     """
     Validates data frames against ecommerce listing requirements.
     Returns a list of warning dicts: { "type": "ERROR"|"WARNING", "message": "...", "sku": "..." }
+    Caps returned warnings at 500 to prevent API and frontend freezing.
     """
     warnings = []
     
@@ -302,17 +303,27 @@ def validate_listings(df_master: pd.DataFrame, master_mappings: dict, df_content
     m_size_col = master_mappings["Option1 Value"]
     m_price_col = master_mappings["Variant Compare At Price"]
     m_link_col = master_mappings.get("Variant SKU Link", "Item Color")
+    m_barcode_col = master_mappings.get("Variant Barcode", "ITEM NAME")
     
     c_style_col = content_mappings["Variant Barcode"]
     c_link_col = content_mappings.get("Variant SKU Link", "SKU")
     c_title_col = content_mappings["Title"]
     
-    # Track unique items
+    # Track unique items and build O(1) sets from Content Sheet for lightning-fast matching
+    valid_content_links = set(df_content[c_link_col].astype(str).str.strip())
+    valid_content_styles = set(df_content[c_style_col].astype(str).str.strip())
+    
     seen_skus = set()
     seen_handles = set()
     
+    limit_reached = False
+    
     # A. Check Mastersheet items
     for idx, row in df_master.iterrows():
+        if len(warnings) >= 500:
+            limit_reached = True
+            break
+            
         sku = str(row.get(m_sku_col, "")).strip()
         size = str(row.get(m_size_col, "")).strip()
         price = str(row.get(m_price_col, "")).strip()
@@ -336,37 +347,50 @@ def validate_listings(df_master: pd.DataFrame, master_mappings: dict, df_content
         if not price or price == "0":
             warnings.append({"type": "WARNING", "message": f"SKU '{sku}' has a zero or missing MRP price", "sku": sku})
             
-        # Check if Mastersheet item color groups actually match any content rows
+        # Check if Mastersheet item color groups actually match any content rows (O(1) lookups)
         if link_val:
-            content_match = df_content[df_content[c_link_col] == link_val]
-            if len(content_match) == 0:
-                # Try style code lookup
-                style_match = df_content[df_content[c_style_col] == str(row.get("ITEM NAME", ""))]
-                if len(style_match) == 0:
+            if link_val not in valid_content_links:
+                # Try style code lookup dynamically
+                style_val = str(row.get(m_barcode_col, "")).strip()
+                if style_val not in valid_content_styles:
                     warnings.append({
                         "type": "WARNING", 
                         "message": f"SKU '{sku}' (color: {link_val}) has no matching record in Content Sheet.", 
                         "sku": sku
                     })
 
-    for idx, row in df_content.iterrows():
-        style_code = str(row.get(c_style_col, "")).strip()
-        title = str(row.get(c_title_col, "")).strip()
-        link_val = str(row.get(c_link_col, "")).strip()
-        
-        # Skip trailing empty rows
-        if not style_code and not title and not link_val:
-            continue
+    # B. Check Content Sheet items (only if warnings limit not already reached)
+    if not limit_reached:
+        for idx, row in df_content.iterrows():
+            if len(warnings) >= 500:
+                limit_reached = True
+                break
+                
+            style_code = str(row.get(c_style_col, "")).strip()
+            title = str(row.get(c_title_col, "")).strip()
+            link_val = str(row.get(c_link_col, "")).strip()
             
-        if not style_code:
-            warnings.append({"type": "WARNING", "message": f"Row {idx+2} in Content Sheet is missing Style/Item Name", "sku": ""})
+            # Skip trailing empty rows
+            if not style_code and not title and not link_val:
+                continue
+                
+            if not style_code:
+                warnings.append({"type": "WARNING", "message": f"Row {idx+2} in Content Sheet is missing Style/Item Name", "sku": ""})
+                
+            if not title:
+                warnings.append({"type": "ERROR", "message": f"Style '{style_code}' in Content Sheet is missing D2C Title", "sku": style_code})
+                
+            handle = slugify(title)
+            if handle in seen_handles:
+                warnings.append({"type": "WARNING", "message": f"Duplicate Handle generated for Title: '{title}'", "sku": style_code})
+            seen_handles.add(handle)
             
-        if not title:
-            warnings.append({"type": "ERROR", "message": f"Style '{style_code}' in Content Sheet is missing D2C Title", "sku": style_code})
-            
-        handle = slugify(title)
-        if handle in seen_handles:
-            warnings.append({"type": "WARNING", "message": f"Duplicate Handle generated for Title: '{title}'", "sku": style_code})
-        seen_handles.add(handle)
+    if limit_reached:
+        warnings.append({
+            "type": "WARNING",
+            "message": "Validation report truncated: showing first 500 warnings. Please fix these issues first.",
+            "sku": ""
+        })
         
     return warnings
+
