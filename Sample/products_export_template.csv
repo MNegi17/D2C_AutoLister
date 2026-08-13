@@ -1,55 +1,37 @@
 Handle,Title,Body (HTML),Vendor,Product Category,Type,Tags,Published,Option1 Name,Option1 Value,Option1 Linked To,Option2 Name,Option2 Value,Option2 Linked To,Option3 Name,Option3 Value,Option3 Linked To,Variant SKU,Variant Grams,Variant Inventory Tracker,Variant Inventory Qty,Variant Inventory Policy,Variant Fulfillment Service,Variant Price,Variant Compare At Price,Variant Requires Shipping,Variant Taxable,Unit Price Total Measure,Unit Price Total Measure Unit,Unit Price Base Measure,Unit Price Base Measure Unit,Variant Barcode,Image Src,Image Position,Image Alt Text,Gift Card,SEO Title,SEO Description,Google Shopping / Google Product Category,Google Shopping / Gender,Google Shopping / Age Group,Google Shopping / MPN,Google Shopping / Condition,Google Shopping / Custom Product,Google Shopping / Custom Label 0,Google Shopping / Custom Label 1,Google Shopping / Custom Label 2,Google Shopping / Custom Label 3,Google Shopping / Custom Label 4,complete your look (product.metafields.custom.complete_your_look),Gender (product.metafields.custom.gender),Manufacture Date (product.metafields.custom.manufacture_date),Myntra Specs Info (product.metafields.custom.myntra_specs_info),new launch (product.metafields.custom.new_launch),product-discount (product.metafields.custom.product_discount),Season (product.metafields.custom.season),Merged Product (product.metafields.merges.product_merged),Google: Custom Product (product.metafields.mm-google-shopping.custom_product),Product rating count (product.metafields.reviews.rating_count),Age group (product.metafields.shopify.age-group),Closure type (product.metafields.shopify.closure-type),Color (product.metafields.shopify.color-pattern),Dress occasion (product.metafields.shopify.dress-occasion),Dress style (product.metafields.shopify.dress-style),First steps/crawlers style (product.metafields.shopify.first-steps-crawlers-style),Footwear material (product.metafields.shopify.footwear-material),Shoe features (product.metafields.shopify.shoe-features),Shoe size (product.metafields.shopify.shoe-size),Size (product.metafields.shopify.size),Target gender (product.metafields.shopify.target-gender),Toe style (product.metafields.shopify.toe-style),Complementary products (product.metafields.shopify--discovery--product_recommendation.complementary_products),Related products (product.metafields.shopify--discovery--product_recommendation.related_products),Related products settings (product.metafields.shopify--discovery--product_recommendation.related_products_display),Search product boosts (product.metafields.shopify--discovery--product_search_boost.queries),Variant Image,Variant Weight Unit,Variant Tax Code,Cost per item,Status
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Kids-Boys-Combo-Set-in-Brown-Beige-with-Soft-Fabric-Tshirt-&-Cargo-Fit-Trouser,Kids Boys Combo Set in Brown Beige with Soft Fabric Tshirt & Cargo Fit Trouser,"Dress your little explorer in effortless style with the Purple United Kids Boys Combo, a premium combo set featuring a Brown Graphic T-Shirt and Beige Cargo Trouser. Thoughtfully designed for comfort and versatility, this stylish outfit blends contemporary fashion with everyday functionality. Whether it's a day at school, a family outing, or a weekend adventure, this coordinated set keeps young boys looking smart while feeling comfortable throughout the day.",Purple United Kids,Apparel & Accessories > Clothing,Combo Set,"Apparel, Combo Set, Boys, All Products, NEW LAUNCH",TRUE,Size In Years,2-3Y,,,,,,,,8905120267833_8905120586279,200,shopify,,deny,manual,3199,1499,TRUE,TRUE,,,,,PBTROS000160-BEIGE_PBTSHS003138-BROWN,,,,FALSE,Kids Boys Combo Set in Brown Beige with Soft Fabric Tshirt & Cargo Fit Trouser,"Built for adventure and everyday exploration, this Kids Boys Bermuda combines contemporary utility styling with premium comfort. Designed in a versatile shade, it features functional cargo pockets, contrast panel detailing, and a relaxed silhouette that keeps young trendsetters looking sharp throughout the day. Whether it's a family outing, vacation, or weekend playdate, this Bermuda delivers effortless style and practicality.
+Crafted from durable woven twill fabric, the Bermuda offers a structured yet comfortable feel. The elasticated waistband with adjustable drawcord ensures a secure fit, while the breathable construction allows easy movement during active play. Functional cargo pockets provide utility-inspired appeal, while side and back pockets add convenience for carrying small essentials.
+Designed for active boys, this Kids Boys Bermuda balances comfort and durability with ease. The relaxed knee-length fit promotes unrestricted movement, while reinforced stitching enhances long-lasting wear. The premium fabric retains its shape and appearance even after repeated washes, making it a dependable wardrobe essential.
+The utility-inspired design is elevated with contrast panel accents, flap cargo pockets, and clean tailoring details that create a modern outdoor-inspired look. The neutral colour makes styling easy with graphic tees, polos, casual shirts, and sneakers, offering multiple outfit possibilities across seasons.
+Perfect for casual outings, vacations, park visits, travel, and everyday wear, this Bermuda is a versatile addition to any young boy's wardrobe. For best results, machine wash with similar colours and avoid harsh bleach. Package includes 1 Kids Boys Bermuda featuring utility cargo pockets, adjustable drawcord waistband, and premium comfort construction.",Apparel & Accessories > Clothing,Boys,,,,,,,,,,,Boys,2026,"Item Color: PBTROS000160-BEIGE_PBTSHS003138-BROWN
+Fabric: COTTON
+Items Included in Packaging: 1 Combo Set
+Commodity: Boy's Combo Set",NEW LAUNCH,,,,,,,,,,,,,,,,,,,,,,,kg,,,active
+Kids-Boys-Combo-Set-in-Brown-Beige-with-Soft-Fabric-Tshirt-&-Cargo-Fit-Trouser,,"Crafted from soft, breathable cotton-rich fabric, the crew neck T-shirt features a bold ""EXPLORE"" graphic that adds a playful touch, while the cargo trouser is designed with an elasticated drawstring waistband for a secure, adjustable fit. Functional flap cargo pockets, ribbed ankle cuffs, and premium stitching enhance both practicality and durability, making this Kids Boys Combo ideal for active lifestyles. The lightweight fabric ensures superior comfort, allowing unrestricted movement during play and everyday activities.",Purple United Kids,,,,TRUE,Size In Years,3-4Y,,,,,,,,8905120267840_8905120586286,200,shopify,,deny,manual,3199,1499,TRUE,TRUE,,,,,PBTROS000160-BEIGE_PBTSHS003138-BROWN,,,,FALSE,,,Apparel & Accessories > Clothing,Boys,,,,,,,,,,,Boys,2026,"Item Color: PBTROS000160-BEIGE_PBTSHS003138-BROWN
+Fabric: COTTON
+Items Included in Packaging: 1 Combo Set
+Commodity: Boy's Combo Set",NEW LAUNCH,,,,,,,,,,,,,,,,,,,,,,,kg,,,active
+Kids-Boys-Combo-Set-in-Brown-Beige-with-Soft-Fabric-Tshirt-&-Cargo-Fit-Trouser,,"Designed to deliver all-day ease, this premium tshirt & trouser set combines modern styling with dependable quality. The relaxed silhouette, breathable fabric, and durable construction make it a wardrobe essential for growing kids. Pair it effortlessly with sneakers for a polished casual look that's perfect across seasons.",Purple United Kids,,,,TRUE,Size In Years,4-5Y,,,,,,,,8905120267857_8905120586293,200,shopify,,deny,manual,3199,1499,TRUE,TRUE,,,,,PBTROS000160-BEIGE_PBTSHS003138-BROWN,,,,FALSE,,,Apparel & Accessories > Clothing,Boys,,,,,,,,,,,Boys,2026,"Item Color: PBTROS000160-BEIGE_PBTSHS003138-BROWN
+Fabric: COTTON
+Items Included in Packaging: 1 Combo Set
+Commodity: Boy's Combo Set",NEW LAUNCH,,,,,,,,,,,,,,,,,,,,,,,kg,,,active
+Kids-Boys-Combo-Set-in-Brown-Beige-with-Soft-Fabric-Tshirt-&-Cargo-Fit-Trouser,,"Ideal for casual outings, travel, vacations, birthday celebrations, family gatherings, playdates, weekend wear, and everyday adventures, this versatile Kids Boys Combo offers endless styling possibilities while maintaining a premium fashion appeal.",Purple United Kids,,,,TRUE,Size In Years,5-6Y,,,,,,,,8905120267864_8905120586309,200,shopify,,deny,manual,3199,1499,TRUE,TRUE,,,,,PBTROS000160-BEIGE_PBTSHS003138-BROWN,,,,FALSE,,,Apparel & Accessories > Clothing,Boys,,,,,,,,,,,Boys,2026,"Item Color: PBTROS000160-BEIGE_PBTSHS003138-BROWN
+Fabric: COTTON
+Items Included in Packaging: 1 Combo Set
+Commodity: Boy's Combo Set",NEW LAUNCH,,,,,,,,,,,,,,,,,,,,,,,kg,,,active
+Kids-Boys-Combo-Set-in-Brown-Beige-with-Soft-Fabric-Tshirt-&-Cargo-Fit-Trouser,,"Choose Purple United Kids for thoughtfully designed kidswear that blends quality, comfort, and contemporary style. Please refer to the size chart before purchasing for the best fit. Machine wash with similar colours using mild detergent. Do not bleach. Package Includes: 1 Brown Graphic Tshirt and 1 Beige Cargo Trouser.",Purple United Kids,,,,TRUE,Size In Years,7-8Y,,,,,,,,8905120267871_8905120586316,200,shopify,,deny,manual,3199,1499,TRUE,TRUE,,,,,PBTROS000160-BEIGE_PBTSHS003138-BROWN,,,,FALSE,,,Apparel & Accessories > Clothing,Boys,,,,,,,,,,,Boys,2026,"Item Color: PBTROS000160-BEIGE_PBTSHS003138-BROWN
+Fabric: COTTON
+Items Included in Packaging: 1 Combo Set
+Commodity: Boy's Combo Set",NEW LAUNCH,,,,,,,,,,,,,,,,,,,,,,,kg,,,active
+Kids-Boys-Combo-Set-in-Brown-Beige-with-Soft-Fabric-Tshirt-&-Cargo-Fit-Trouser,,,Purple United Kids,,,,TRUE,Size In Years,9-10Y,,,,,,,,8905120267888_8905120586323,200,shopify,,deny,manual,3199,1499,TRUE,TRUE,,,,,PBTROS000160-BEIGE_PBTSHS003138-BROWN,,,,FALSE,,,Apparel & Accessories > Clothing,Boys,,,,,,,,,,,Boys,2026,"Item Color: PBTROS000160-BEIGE_PBTSHS003138-BROWN
+Fabric: COTTON
+Items Included in Packaging: 1 Combo Set
+Commodity: Boy's Combo Set",NEW LAUNCH,,,,,,,,,,,,,,,,,,,,,,,kg,,,active
+Kids-Boys-Combo-Set-in-Brown-Beige-with-Soft-Fabric-Tshirt-&-Cargo-Fit-Trouser,,,Purple United Kids,,,,TRUE,Size In Years,11-12Y,,,,,,,,8905120267895_8905120586330,200,shopify,,deny,manual,3199,1499,TRUE,TRUE,,,,,PBTROS000160-BEIGE_PBTSHS003138-BROWN,,,,FALSE,,,Apparel & Accessories > Clothing,Boys,,,,,,,,,,,Boys,2026,"Item Color: PBTROS000160-BEIGE_PBTSHS003138-BROWN
+Fabric: COTTON
+Items Included in Packaging: 1 Combo Set
+Commodity: Boy's Combo Set",NEW LAUNCH,,,,,,,,,,,,,,,,,,,,,,,kg,,,active
+Kids-Boys-Combo-Set-in-Brown-Beige-with-Soft-Fabric-Tshirt-&-Cargo-Fit-Trouser,,,Purple United Kids,,,,TRUE,Size In Years,13-14Y,,,,,,,,8905120267901_8905120586347,200,shopify,,deny,manual,3199,1499,TRUE,TRUE,,,,,PBTROS000160-BEIGE_PBTSHS003138-BROWN,,,,FALSE,,,Apparel & Accessories > Clothing,Boys,,,,,,,,,,,Boys,2026,"Item Color: PBTROS000160-BEIGE_PBTSHS003138-BROWN
+Fabric: COTTON
+Items Included in Packaging: 1 Combo Set
+Commodity: Boy's Combo Set",NEW LAUNCH,,,,,,,,,,,,,,,,,,,,,,,kg,,,active

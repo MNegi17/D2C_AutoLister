@@ -107,7 +107,59 @@ def run_integration_test():
     df_output.to_csv(test_out_path, index=False, encoding="utf-8-sig")
     print(f"\n[Step 5] Integration output saved successfully to {test_out_path}")
     
-    print("\n=== INTEGRATION TEST PASSED SUCCESSFULLY (100% CORRECT SCHEMA AND RULES) ===")
+    print("\n[Step 6] Running targeted business logic tests for new rules...")
+    from core import resolve_category, generate_tags, generate_myntra_specs
+    
+    # 1. Test POLO T-SHIRT conversion
+    assert resolve_category("POLO T-SHIRT") == "T-Shirt", "POLO T-SHIRT did not convert to T-Shirt!"
+    assert resolve_category("POLO T SHIRT") == "T-Shirt", "POLO T SHIRT did not convert to T-Shirt!"
+    print("  [OK] POLO T-SHIRT strictly converts to T-Shirt")
+    
+    # 2. Test DENIM subcategory mapping
+    assert resolve_category("DENIM", "JEANS") == "Jeans", "DENIM + JEANS failed!"
+    assert resolve_category("DENIM", "SHIRT F/S") == "Shirt", "DENIM + SHIRT F/S failed!"
+    assert resolve_category("DENIM", "SHIRT H/S") == "Shirt", "DENIM + SHIRT H/S failed!"
+    assert resolve_category("DENIM", "DUNGAREE SET F/S") == "Dungaree", "DENIM + DUNGAREE SET F/S failed!"
+    assert resolve_category("DENIM", "DUNGAREE SET") == "Dungaree", "DENIM + DUNGAREE SET failed!"
+    assert resolve_category("DENIM", "DUNGAREE") == "Dungaree", "DENIM + DUNGAREE failed!"
+    assert resolve_category("DENIM", "CO-ORD SET") == "Clothing Set", "DENIM + CO-ORD SET failed!"
+    assert resolve_category("DENIM", "BERMUDA") == "Bermuda", "DENIM + BERMUDA failed!"
+    assert resolve_category("DENIM", "JUMPSUIT") == "Jumpsuit", "DENIM + JUMPSUIT failed!"
+    assert resolve_category("DENIM", "DRESS") == "Dress", "DENIM + DRESS failed!"
+    assert resolve_category("DENIM", "JACKET") == "Jacket", "DENIM + JACKET failed!"
+    assert resolve_category("DENIM", "SHORTS") == "Shorts", "DENIM + SHORTS failed!"
+    assert resolve_category("DENIM", "SKIRT") == "Skirt", "DENIM + SKIRT failed!"
+    assert resolve_category("DENIM", "TOP") == "Top", "DENIM + TOP failed!"
+    assert resolve_category("DENIM", "DENIM") == "Denim", "DENIM + DENIM failed!"
+    print("  [OK] DENIM subcategories correctly resolved (Shirts, Dungarees, Sets, etc.)")
+    
+    # 3. Test Tags Generation for Unisex & Infant Sub Division
+    tag_unisex_infant = generate_tags("Apparel", "Dungaree", "KIDS-UNISEX", "INFANT")
+    assert "Infants" in tag_unisex_infant and "Girls, Boys" not in tag_unisex_infant, f"Unisex + Infant tags incorrect: {tag_unisex_infant}"
+    
+    tag_unisex_older = generate_tags("Apparel", "Dungaree", "UNISEX", "TODDLER")
+    assert "Unisex" in tag_unisex_older and "Infants" not in tag_unisex_older, f"Unisex + Toddler tags incorrect: {tag_unisex_older}"
+    
+    tag_girls = generate_tags("Apparel", "Top", "KIDS GIRLS", "OLDER")
+    assert "Girls" in tag_girls, f"Girls tags incorrect: {tag_girls}"
+    
+    tag_boys = generate_tags("Apparel", "Shirt", "KIDS BOYS", "OLDER")
+    assert "Boys" in tag_boys, f"Boys tags incorrect: {tag_boys}"
+    print("  [OK] Tags generated with Unisex + Sub Division rules (Infants vs Unisex)")
+    
+    # 4. Test Myntra Specs Commodity for Unisex vs Gendered
+    specs_unisex = generate_myntra_specs("APPAREL", "Dungaree", "KIDS-UNISEX", "", "", "Cotton", "TEST-LINK", db, "INFANT")
+    assert "Commodity: Unisex Dungaree" in specs_unisex, f"Unisex Commodity formatting failed: {specs_unisex}"
+    assert "Unisex's" not in specs_unisex, "Unisex's should not appear in specs!"
+    
+    specs_girl = generate_myntra_specs("APPAREL", "Top", "KIDS GIRLS", "", "", "Cotton", "TEST-LINK", db, "OLDER")
+    assert "Commodity: Girl's Top" in specs_girl, f"Girl Commodity formatting failed: {specs_girl}"
+    
+    specs_boy = generate_myntra_specs("APPAREL", "T-Shirt", "KIDS BOYS", "", "", "Cotton", "TEST-LINK", db, "TODDLER")
+    assert "Commodity: Boy's T-Shirt" in specs_boy, f"Boy Commodity formatting failed: {specs_boy}"
+    print("  [OK] Myntra Specs Commodity formatted cleanly ('Unisex Dungaree' without 's)")
+    
+    print("\n=== ALL INTEGRATION & BUSINESS LOGIC TESTS PASSED (100% VERIFIED) ===")
     db.close()
 
 if __name__ == "__main__":

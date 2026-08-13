@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from sqlalchemy.orm import Session
 from datetime import datetime
-from core import slugify, generate_tags, generate_myntra_specs, determine_brand
+from core import slugify, generate_tags, generate_myntra_specs, determine_brand, resolve_category
 
 # Standard Shopify default column values
 DEFAULT_SHOPIFY_VALUES = {
@@ -139,29 +139,22 @@ def generate_shopify_csv(
             # Skip or generate with basic details if no copy content found
             continue
         
-        # B. Extract content fields
+        # B. Extract content and metadata fields
         d2c_title = str(content_row.get(c_title_col, "")).strip()
         description = str(content_row.get(c_desc_col, "")).strip()
         division = str(content_row.get("DIVISION", first_master_row.get("DIVISION", "Apparel"))).strip()
-        category = str(content_row.get("CATEGORY", first_master_row.get("CATEGORY", "T-Shirt"))).strip()
-        
-        # Apply specific category mapping overrides (website-level category matches)
-        cat_lower = category.lower()
-        if "toy" in cat_lower:
-            category = "Soft Toys"
-        elif "sandal" in cat_lower:
-            category = "Sandals"
-        elif "jeans" in cat_lower:
-            category = "Denim"
-        elif "booties" in cat_lower:
-            category = "Baby Booties"
-            
+        raw_category = str(content_row.get("CATEGORY", first_master_row.get("CATEGORY", "T-Shirt"))).strip()
+        raw_subcat = str(first_master_row.get("SUB CATEGORY", content_row.get("SUB CATEGORY", ""))).strip()
+        raw_subdiv = str(first_master_row.get("SUB DIVISION", content_row.get("SUB DIVISION", ""))).strip()
         gender = str(content_row.get("GENDER", first_master_row.get("GENDER", "Girls"))).strip()
         shade = str(content_row.get("SHADE NAME", first_master_row.get("COLOR", ""))).strip()
         
+        # Apply specific category mapping & Denim subcategory conversion overrides
+        category = resolve_category(raw_category, raw_subcat)
+        
         handle = slugify(d2c_title)
         brand = determine_brand(division, db)
-        tags = generate_tags(division, category, gender)
+        tags = generate_tags(division, category, gender, raw_subdiv)
         google_cat = get_google_category(division, category)
         
         # Extract materials for specs
@@ -169,7 +162,7 @@ def generate_shopify_csv(
         sole_mat = str(first_master_row.get(m_sole_col, "")).strip()
         fabric_mat = str(first_master_row.get(m_fabric_col, "")).strip()
         
-        specs_info = generate_myntra_specs(division, category, gender, upper_mat, sole_mat, fabric_mat, str(link_val).strip(), db)
+        specs_info = generate_myntra_specs(division, category, gender, upper_mat, sole_mat, fabric_mat, str(link_val).strip(), db, raw_subdiv)
         
         # Determine Shopify option1 name
         opt1_name = "Size In Uk"
@@ -213,9 +206,10 @@ def generate_shopify_csv(
                 if k in row_dict:
                     row_dict[k] = v
                     
-            # Set age group based on gender rules
+            # Set age group based on gender and subdivision rules
             gen_lower = gender.lower()
-            if "infant" in gen_lower:
+            subdiv_lower = raw_subdiv.lower()
+            if "infant" in gen_lower or "infant" in subdiv_lower:
                 age_group_val = "Infant"
             elif "girl" in gen_lower or "female" in gen_lower:
                 age_group_val = "Girls"
@@ -227,12 +221,14 @@ def generate_shopify_csv(
                 age_group_val = "Girls"
 
             # Set metafields for all rows
-            if "infant" in gen_lower:
+            if "infant" in gen_lower or ("unisex" in gen_lower and "infant" in subdiv_lower):
                 gender_meta = "Infants"
             elif "girl" in gen_lower or "female" in gen_lower:
                 gender_meta = "Girls"
             elif "boy" in gen_lower or "male" in gen_lower:
                 gender_meta = "Boys"
+            elif "unisex" in gen_lower:
+                gender_meta = "Unisex"
             else:
                 gender_meta = "Unisex"
             row_dict["Gender (product.metafields.custom.gender)"] = gender_meta

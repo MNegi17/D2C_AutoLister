@@ -154,6 +154,70 @@ def auto_map_columns(source_columns: list, source_sheet_type: str, db: Session) 
             
     return mappings
 
+# --- CATEGORY RESOLVER & SUBCATEGORY MAPPER ---
+
+DENIM_SUBCATEGORY_MAP = {
+    "JEANS": "Jeans",
+    "SHORTS": "Shorts",
+    "SKIRT": "Skirt",
+    "JACKET": "Jacket",
+    "SHIRT F/S": "Shirt",
+    "SHIRT H/S": "Shirt",
+    "SHIRT": "Shirt",
+    "TOP": "Top",
+    "DENIM": "Denim",
+    "DUNGAREE": "Dungaree",
+    "DUNGAREE SET F/S": "Dungaree",
+    "DUNGAREE SET": "Dungaree",
+    "BERMUDA": "Bermuda",
+    "JUMPSUIT": "Jumpsuit",
+    "DRESS": "Dress",
+    "CO-ORD SET": "Clothing Set",
+    "COORD SET": "Clothing Set",
+    "CO-ORD": "Clothing Set",
+    "CLOTHING SET": "Clothing Set"
+}
+
+def resolve_category(category: str, sub_category: str = "") -> str:
+    """
+    Resolves and normalizes category names based on catalog business rules:
+    1. 'POLO T-SHIRT' is strictly converted to 'T-Shirt'.
+    2. 'DENIM' is converted to its Subcategory, with special mappings for Shirts, Dungarees, Sets, etc.
+    3. Normalizes other specific category names (Soft Toys, Sandals, Baby Booties).
+    """
+    cat_raw = str(category).strip()
+    cat_upper = cat_raw.upper()
+    subcat_upper = str(sub_category).strip().upper()
+    
+    # 1. Strictly convert POLO T-SHIRT to T-Shirt
+    if cat_upper in ["POLO T-SHIRT", "POLO T SHIRT", "POLO TSHIRT", "POLO-T-SHIRT"] or cat_upper.startswith("POLO T"):
+        return "T-Shirt"
+        
+    # 2. Convert DENIM to Subcategory
+    if cat_upper == "DENIM":
+        if subcat_upper in DENIM_SUBCATEGORY_MAP:
+            return DENIM_SUBCATEGORY_MAP[subcat_upper]
+        if "SHIRT" in subcat_upper:
+            return "Shirt"
+        if "DUNGAREE" in subcat_upper:
+            return "Dungaree"
+        if "CO-ORD" in subcat_upper or "COORD" in subcat_upper:
+            return "Clothing Set"
+        if subcat_upper and subcat_upper not in ["#N/A", "(NIL)", "DENIM", ""]:
+            return subcat_upper.title()
+        return "Denim"
+        
+    # 3. Standard category normalizations
+    cat_lower = cat_raw.lower()
+    if "toy" in cat_lower:
+        return "Soft Toys"
+    elif "sandal" in cat_lower:
+        return "Sandals"
+    elif "booties" in cat_lower:
+        return "Baby Booties"
+        
+    return cat_raw.title()
+
 # --- FIELD GENERATORS (BRAND, TAGS, MYNTRA SPECS) ---
 
 def determine_brand(division: str, db: Session) -> str:
@@ -172,35 +236,51 @@ def determine_brand(division: str, db: Session) -> str:
         return "Toothless"
     return "Purple United Kids"
 
-def generate_tags(division: str, category: str, gender: str) -> str:
+def generate_tags(division: str, category: str, gender: str, sub_division: str = "") -> str:
     """
     Generates standard Division, Category, Gender, All Products, NEW LAUNCH tags list.
-    If gender includes 'infant', 'Infant' is used in place of gender.
+    Special rules:
+    - If gender is Unisex:
+      - If sub_division is "Infant", tag is "Infants"
+      - If sub_division is anything else, tag is "Unisex"
+    - If gender is Infant, tag is "Infants"
+    - If gender is Girl / Female, tag is "Girls"
+    - If gender is Boy / Male, tag is "Boys"
+    - Else fallback to gender title-cased or "Girls"
     """
     div = str(division).title().strip()
     cat = str(category).title().strip()
-    gen = str(gender).title().strip()
+    gen = str(gender).strip()
+    subdiv = str(sub_division).strip()
     
-    # Determine the gender/infant tag
     gen_lower = gen.lower()
-    if "infant" in gen_lower:
-        gen_tag = "Infant"
+    subdiv_lower = subdiv.lower()
+    
+    # 1. Unisex logic
+    if "unisex" in gen_lower:
+        if "infant" in subdiv_lower:
+            gen_tag = "Infants"
+        else:
+            gen_tag = "Unisex"
+    elif "infant" in gen_lower:
+        gen_tag = "Infants"
     elif "girl" in gen_lower or "female" in gen_lower:
         gen_tag = "Girls"
     elif "boy" in gen_lower or "male" in gen_lower:
         gen_tag = "Boys"
-    elif "unisex" in gen_lower:
-        gen_tag = "Girls, Boys"
     else:
-        gen_tag = gen if gen else "Girls"
+        gen_tag = gen.title() if gen else "Girls"
         
     tags = [div, cat, gen_tag, "All Products", "NEW LAUNCH"]
     return ", ".join(tags)
 
-def generate_myntra_specs(division: str, category: str, gender: str, upper_mat: str, sole_mat: str, fabric_mat: str, item_color: str, db: Session) -> str:
+def generate_myntra_specs(division: str, category: str, gender: str, upper_mat: str, sole_mat: str, fabric_mat: str, item_color: str, db: Session, sub_division: str = "") -> str:
     """
     Generates formatted custom Myntra Specs Info metafield string.
     Uses database-configured templates for category dependency.
+    Commodity rules:
+    - Unisex Apparel: 'Unisex {Category}' (without 's)
+    - Gendered Apparel: 'Girl\\'s {Category}', 'Boy\\'s {Category}'
     """
     div_upper = str(division).upper().strip()
     
@@ -211,34 +291,25 @@ def generate_myntra_specs(division: str, category: str, gender: str, upper_mat: 
     # Normalizations
     prod_name = str(category).title().strip()
     gender_norm = str(gender).title().strip()
+    g_lower = gender_norm.lower()
     
-    # Build standard Commodity gender tag
-    commodity_gender = gender_norm
-    if "Kids " in commodity_gender:
-        commodity_gender = commodity_gender.replace("Kids ", "")
-        
-    if "Boys" in commodity_gender:
-        commodity_gender = "Boys"
-    elif "Girls" in commodity_gender:
-        commodity_gender = "Girls"
-        
     # Standard formats if template not found or fallback
     if div_upper == "FOOTWEAR":
         # Upper Material, Sole, Items, Commodity
         u = upper_mat or "SYNTHETIC"
         s = sole_mat or "TPR"
         
-        g_lower = gender_norm.lower()
         if "girl" in g_lower or "female" in g_lower:
             c_gender = "Girls"
         elif "boy" in g_lower or "male" in g_lower:
             c_gender = "Boys"
-        else:
+        elif "unisex" in g_lower:
             c_gender = "Unisex"
+        else:
+            c_gender = gender_norm or "Unisex"
             
-        # E.g. Boys Infant Booties
-        sub_div = "Infant" if "booties" in prod_name.lower() else ""
-        commodity = f"{c_gender} {sub_div} {prod_name}".replace("  ", " ").strip()
+        sub_div_tag = "Infant" if ("booties" in prod_name.lower() or "infant" in str(sub_division).lower() or "infant" in g_lower) else ""
+        commodity = f"{c_gender} {sub_div_tag} {prod_name}".replace("  ", " ").strip()
         
         if not template_str:
             template_str = "Item Color: {Item Color}\nUpper Material: {upper}\nSole: {sole}\nItems Included in Packaging: 1 Pair {prod_name}\nCommodity: {commodity}"
@@ -249,17 +320,19 @@ def generate_myntra_specs(division: str, category: str, gender: str, upper_mat: 
         # Upper Material (Fabric), Items, Commodity
         f_mat = fabric_mat or upper_mat or "Cotton"
         
-        g_lower = gender_norm.lower()
         if "girl" in g_lower or "female" in g_lower:
-            c_gender = "Girl"
+            commodity = f"Girl's {prod_name}"
         elif "boy" in g_lower or "male" in g_lower:
-            c_gender = "Boy"
+            commodity = f"Boy's {prod_name}"
+        elif "unisex" in g_lower:
+            commodity = f"Unisex {prod_name}"
+        elif "infant" in g_lower:
+            commodity = f"Infants {prod_name}" if "infants" in g_lower else f"Infant's {prod_name}"
         else:
-            c_gender = "Unisex"
+            commodity = f"{gender_norm} {prod_name}"
             
         # Decide if "1 Pair" or "1" piece
         pack_term = "1 Pair" if "set" in prod_name.lower() or "suit" in prod_name.lower() or "trouser" in prod_name.lower() else "1"
-        commodity = f"{c_gender}'s {prod_name}"
         
         if not template_str:
             template_str = "Item Color: {Item Color}\nFabric: {fabric}\nItems Included in Packaging: {pack_term} {prod_name}\nCommodity: {commodity}"
