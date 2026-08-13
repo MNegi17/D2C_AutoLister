@@ -182,7 +182,8 @@ def resolve_category(category: str, sub_category: str = "") -> str:
     """
     Resolves and normalizes category names based on catalog business rules:
     1. 'POLO T-SHIRT' is strictly converted to 'T-Shirt'.
-    2. 'DENIM' is converted to its Subcategory, with special mappings for Shirts, Dungarees, Sets, etc.
+    2. Any category containing or starting with 'DENIM' (e.g. 'DENIM JEANS', 'DENIM SHIRT', or 'DENIM' + subcategory)
+       is converted purely to its subcategory (e.g. 'Jeans', 'Shirt', 'Dungaree', 'Clothing Set', etc.), never keeping 'Denim' prefix.
     3. Normalizes other specific category names (Soft Toys, Sandals, Baby Booties).
     """
     cat_raw = str(category).strip()
@@ -193,7 +194,29 @@ def resolve_category(category: str, sub_category: str = "") -> str:
     if cat_upper in ["POLO T-SHIRT", "POLO T SHIRT", "POLO TSHIRT", "POLO-T-SHIRT"] or cat_upper.startswith("POLO T"):
         return "T-Shirt"
         
-    # 2. Convert DENIM to Subcategory
+    # 2. Check if category starts with "DENIM " (e.g. "DENIM JEANS", "DENIM SHIRT", "DENIM CO-ORD SET")
+    if cat_upper.startswith("DENIM "):
+        suffix = cat_upper[6:].strip()
+        if suffix in DENIM_SUBCATEGORY_MAP:
+            return DENIM_SUBCATEGORY_MAP[suffix]
+        if "SHIRT" in suffix:
+            return "Shirt"
+        if "DUNGAREE" in suffix:
+            return "Dungaree"
+        if "CO-ORD" in suffix or "COORD" in suffix or "SET" in suffix:
+            return "Clothing Set"
+        if suffix:
+            return suffix.title()
+
+    # 3. Check if category ends with " DENIM" (e.g. "JEANS DENIM")
+    if cat_upper.endswith(" DENIM"):
+        prefix = cat_upper[:-6].strip()
+        if prefix in DENIM_SUBCATEGORY_MAP:
+            return DENIM_SUBCATEGORY_MAP[prefix]
+        if prefix:
+            return prefix.title()
+            
+    # 4. If Category is purely "DENIM", convert to Subcategory
     if cat_upper == "DENIM":
         if subcat_upper in DENIM_SUBCATEGORY_MAP:
             return DENIM_SUBCATEGORY_MAP[subcat_upper]
@@ -207,7 +230,11 @@ def resolve_category(category: str, sub_category: str = "") -> str:
             return subcat_upper.title()
         return "Denim"
         
-    # 3. Standard category normalizations
+    # 5. Direct mappings for clothing sets
+    if cat_upper in ["CO-ORD SET", "COORD SET", "CO-ORD"]:
+        return "Clothing Set"
+        
+    # 6. Standard category normalizations
     cat_lower = cat_raw.lower()
     if "toy" in cat_lower:
         return "Soft Toys"
@@ -332,7 +359,7 @@ def generate_myntra_specs(division: str, category: str, gender: str, upper_mat: 
             commodity = f"{gender_norm} {prod_name}"
             
         # Decide if "1 Pair" or "1" piece
-        pack_term = "1 Pair" if "set" in prod_name.lower() or "suit" in prod_name.lower() or "trouser" in prod_name.lower() else "1"
+        pack_term = "1 Pair" if any(k in prod_name.lower() for k in ["set", "suit", "trouser", "jean", "pant", "short", "dungaree", "booties"]) else "1"
         
         if not template_str:
             template_str = "Item Color: {Item Color}\nFabric: {fabric}\nItems Included in Packaging: {pack_term} {prod_name}\nCommodity: {commodity}"

@@ -117,6 +117,10 @@ def run_integration_test():
     
     # 2. Test DENIM subcategory mapping
     assert resolve_category("DENIM", "JEANS") == "Jeans", "DENIM + JEANS failed!"
+    assert resolve_category("DENIM JEANS") == "Jeans", "DENIM JEANS failed!"
+    assert resolve_category("DENIM SHIRT") == "Shirt", "DENIM SHIRT failed!"
+    assert resolve_category("DENIM CO-ORD SET") == "Clothing Set", "DENIM CO-ORD SET failed!"
+    assert resolve_category("DENIM DUNGAREE") == "Dungaree", "DENIM DUNGAREE failed!"
     assert resolve_category("DENIM", "SHIRT F/S") == "Shirt", "DENIM + SHIRT F/S failed!"
     assert resolve_category("DENIM", "SHIRT H/S") == "Shirt", "DENIM + SHIRT H/S failed!"
     assert resolve_category("DENIM", "DUNGAREE SET F/S") == "Dungaree", "DENIM + DUNGAREE SET F/S failed!"
@@ -131,7 +135,7 @@ def run_integration_test():
     assert resolve_category("DENIM", "SKIRT") == "Skirt", "DENIM + SKIRT failed!"
     assert resolve_category("DENIM", "TOP") == "Top", "DENIM + TOP failed!"
     assert resolve_category("DENIM", "DENIM") == "Denim", "DENIM + DENIM failed!"
-    print("  [OK] DENIM subcategories correctly resolved (Shirts, Dungarees, Sets, etc.)")
+    print("  [OK] DENIM subcategories correctly resolved (DENIM JEANS -> Jeans, Shirts, Dungarees, Sets, etc.)")
     
     # 3. Test Tags Generation for Unisex & Infant Sub Division
     tag_unisex_infant = generate_tags("Apparel", "Dungaree", "KIDS-UNISEX", "INFANT")
